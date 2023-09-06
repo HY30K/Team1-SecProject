@@ -22,5 +22,6 @@ public class Enemy : MonoBehaviour
     protected virtual void Die()
     {
         WaveSystem.Instance.DieEnemy();
+        PoolingManager.instance.Push(gameObject);
     }
 }

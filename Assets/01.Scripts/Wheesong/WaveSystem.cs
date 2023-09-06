@@ -22,7 +22,7 @@ public class WaveSystem : MonoBehaviour
     public static WaveSystem Instance { get { return instance; } }
 
     [SerializeField] private List<SpawnData> spawnDatas = new List<SpawnData>();
-    [SerializeField] private Transform spawnTrs;
+    [SerializeField] private Transform[] spawnTrs;
     [SerializeField] private float spawnTime;
 
     [HideInInspector] public int nowWave { get; private set; }
@@ -67,7 +67,8 @@ public class WaveSystem : MonoBehaviour
             {
                 waveEnemyCnt++;
 
-                PoolingManager.instance.Pop(popName, spawnTrs.position);
+                Vector2 spawnPos = spawnTrs[UnityEngine.Random.Range(0, spawnDatas.Count)].position;
+                PoolingManager.instance.Pop(popName, spawnPos);
                 yield return new WaitForSeconds(spawnTime);
             }
         }
@@ -88,7 +89,8 @@ public class WaveSystem : MonoBehaviour
 
             int randomIndex = UnityEngine.Random.Range(0, randomEnemy.Count);
             string popName = spawnDatas[nowWave].enemyTuples[randomIndex].obj.name;
-            PoolingManager.instance.Pop(popName, spawnTrs.position);
+            Vector2 spawnPos = spawnTrs[UnityEngine.Random.Range(0, spawnDatas.Count)].position;
+            PoolingManager.instance.Pop(popName, spawnPos);
 
             spawnDatas[nowWave].enemyTuples[randomIndex].cnt--;
             if (spawnDatas[nowWave].enemyTuples[randomIndex].cnt <= 0)
