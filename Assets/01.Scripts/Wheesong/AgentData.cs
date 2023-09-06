@@ -10,14 +10,16 @@ public class AgentData : ScriptableObject
     public float speed { get; private set; }
     public float attackDelay { get; private set; }
     public float range { get; private set; }
+    public float attackRange { get; private set; }
 
     public AgentData(out float hp, out float attack, out float speed,
-                    out float attackDelay, out float range)
+                    out float attackDelay, out float range, out float attackRange)
     {
         hp = this.hp;
         attack = this.attack;
         speed = this.speed;
         attackDelay = this.attackDelay;
         range = this.range;
+        attackRange = this.attackRange;
     }
 }
