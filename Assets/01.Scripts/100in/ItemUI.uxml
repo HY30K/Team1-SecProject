@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Container" style="flex-grow: 0; width: 10%; height: 5%; align-items: stretch; justify-content: space-between; flex-direction: row; align-self: stretch; top: auto; transform-origin: center;">
+        <ui:VisualElement name="item1" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/07.Assets/Potion%20&amp;%20Item/Potions%20and%20Icons.gif?fileID=-1158147492&amp;guid=16835fedbc167cb48afe2b6746d0cd7c&amp;type=3#Potions and Icons_25&apos;); flex-direction: row-reverse;" />
+        <ui:VisualElement name="Item2" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/07.Assets/Potion%20&amp;%20Item/Potions%20and%20Icons.gif?fileID=-1158147492&amp;guid=16835fedbc167cb48afe2b6746d0cd7c&amp;type=3#Potions and Icons_25&apos;);" />
+        <ui:VisualElement name="Item3" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/07.Assets/Potion%20&amp;%20Item/Potions%20and%20Icons.gif?fileID=-1158147492&amp;guid=16835fedbc167cb48afe2b6746d0cd7c&amp;type=3#Potions and Icons_25&apos;);" />
+    </ui:VisualElement>
+</ui:UXML>

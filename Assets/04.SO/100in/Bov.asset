@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ecd0dc319048c7499b272a1d2424eaf, type: 3}
-  m_Name: Sword 1
+  m_Script: {fileID: 11500000, guid: a8eb1a30da04cc54384969a2a8ba399f, type: 3}
+  m_Name: Bov
   m_EditorClassIdentifier: 
-  _weaponName: "\uCE7C"
+  _weaponName: "\uD65C"
   _weaponSprite: {fileID: 0}
   _keyValue: 1001
   _hp: 5
-  _attackPower: 20
-  _attackSpeed: 5
+  _attackPower: 0
+  _attackSpeed: 0
