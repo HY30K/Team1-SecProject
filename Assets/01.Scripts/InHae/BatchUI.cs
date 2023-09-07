@@ -1,12 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BatchUI : MonoBehaviour, IPointerClickHandler
+public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDownHandler 
 {
-    private Dictionary<string, Image> units = new Dictionary<string, Image>();
+    private string currentUnitName;
     private Camera mainCam;
 
     private void Awake()
@@ -14,18 +15,22 @@ public class BatchUI : MonoBehaviour, IPointerClickHandler
         mainCam = Camera.main;
     }
 
-    private void Start()
+    public void OnEndDrag(PointerEventData eventData)
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            units.Add(transform.GetChild(i).name, transform.GetChild(i).GetComponent<Image>());
-        }
+        Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
+        BatchManager.Instance.UnitBatch(mousePos, currentUnitName);
+    }
+    
+    public void OnDrag(PointerEventData eventData)
+    {
+        Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
+        BatchManager.Instance.UnitAlphaBatch(mousePos);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        Ray ray = mainCam.ScreenPointToRay(eventData.position);
-        
-        
+        currentUnitName = eventData.pointerCurrentRaycast.gameObject.name;
+        Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
+        BatchManager.Instance.UnitCreate(mousePos, currentUnitName+"Alpha");
     }
 }

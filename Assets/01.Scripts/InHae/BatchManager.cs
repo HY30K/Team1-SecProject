@@ -1,28 +1,52 @@
+using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class BatchManager : MonoBehaviour
 {
-    [SerializeField] private GameObject unit;
-    private Camera mainCam;
+    [SerializeField] private GameObject[] units;
+    [SerializeField] private GameObject[] unitAlphas;
+    private Dictionary<string, GameObject> unitsDictionary = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> unitAlphasDictionary = new Dictionary<string, GameObject>();
+    private GameObject currentUnitAlpha;
+
+    static public BatchManager Instance;
 
     private void Awake()
     {
-        mainCam = Camera.main;
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
+        if (Instance == null)
         {
-            //Batch();
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    void Batch()
+    private void Start()
     {
-        Vector3 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 1f;
-        Instantiate(unit, mousePos, quaternion.identity);
+        for (int i = 0; i < units.Length; i++)
+        {
+            unitsDictionary.Add(units[i].name, units[i]);
+            unitAlphasDictionary.Add(unitAlphas[i].name, unitAlphas[i]);
+        }
+    }
+
+    public void UnitCreate(Vector2 batchPos, string unitAlphaName)
+    {
+        currentUnitAlpha = Instantiate(unitAlphasDictionary[unitAlphaName], batchPos, quaternion.identity);
+    }
+
+    public void UnitAlphaBatch(Vector2 batchPos)
+    {
+        currentUnitAlpha.transform.position = batchPos;
+    }
+
+    public void UnitBatch(Vector2 batchPos, string unitName)
+    {
+        Instantiate(unitsDictionary[unitName], batchPos, quaternion.identity);
+        Destroy(currentUnitAlpha);
     }
 }
