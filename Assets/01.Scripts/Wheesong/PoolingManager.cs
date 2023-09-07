@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PoolingManager : MonoBehaviour
 {
-    public static PoolingManager instance;
+    private static PoolingManager instance;
+    public static PoolingManager Instance { get { return instance; } }
 
     [SerializeField] private GameObject[] obj;
 

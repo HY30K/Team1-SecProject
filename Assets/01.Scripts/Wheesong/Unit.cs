@@ -102,7 +102,9 @@ public abstract class Unit : MonoBehaviour
 
     protected virtual void Die()
     {
-        PoolingManager.instance.Push(gameObject);
+        state = State.DIE;
+        WaveSystem.Instance.DieUnit();
+        PoolingManager.Instance.Push(gameObject);
     }
 
     private void OnDrawGizmos()

@@ -21,14 +21,19 @@ public class WaveSystem : MonoBehaviour
     private static WaveSystem instance;
     public static WaveSystem Instance { get { return instance; } }
 
+    [Header("Spawn")]
     [SerializeField] private List<SpawnData> spawnDatas = new List<SpawnData>();
     [SerializeField] private Transform[] spawnTrs;
     [SerializeField] private float spawnTime;
+
+    [Header("Obj")]
+    [SerializeField] private Transform unitParent;
 
     [HideInInspector] public int nowWave { get; private set; }
     [HideInInspector] public bool isWaving { get; private set; }
 
     private int waveEnemyCnt;
+    private int waveUnitCnt;
     private bool isSpawning;
 
     const float hpUpgradeGrape = 1.15f;
@@ -37,6 +42,7 @@ public class WaveSystem : MonoBehaviour
     public void NextWave()
     {
         isWaving = isSpawning = true;
+        waveUnitCnt = unitParent.childCount;
         EnemyDataUpgrade();
         StartCoroutine(ParallelSpawnEnemy());
     }
@@ -54,8 +60,38 @@ public class WaveSystem : MonoBehaviour
     public void DieEnemy()
     {
         waveEnemyCnt--;
-        if(waveEnemyCnt <= 0 && !isSpawning)
+        if (waveEnemyCnt <= 0 && !isSpawning)
+        {
+            PlayerWin();
             isWaving = false;
+        }
+    }
+
+    public void DieUnit()
+    {
+        waveUnitCnt--;
+        if (waveUnitCnt <= 0)
+        {
+            StopAllCoroutines();
+            PlayerLose();
+            isWaving = false;
+        }
+    }
+
+    private void PlayerWin()//할거 없는거 같은데...
+    {
+        
+    }
+
+    private void PlayerLose()
+    {
+        //남아있는 적들 pop해주기
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy dummyenemy in enemies)
+        {
+            PoolingManager.Instance.Push(dummyenemy.gameObject);
+        }
+        //마왕체력 깎기
     }
 
     private IEnumerator SequentiallySpawnEnemy() //위에있는 순부터 차례대로 생성
@@ -68,7 +104,7 @@ public class WaveSystem : MonoBehaviour
                 waveEnemyCnt++;
 
                 Vector2 spawnPos = spawnTrs[UnityEngine.Random.Range(0, spawnDatas.Count)].position;
-                PoolingManager.instance.Pop(popName, spawnPos);
+                PoolingManager.Instance.Pop(popName, spawnPos);
                 yield return new WaitForSeconds(spawnTime);
             }
         }
@@ -90,7 +126,7 @@ public class WaveSystem : MonoBehaviour
             int randomIndex = UnityEngine.Random.Range(0, randomEnemy.Count);
             string popName = spawnDatas[nowWave].enemyTuples[randomIndex].obj.name;
             Vector2 spawnPos = spawnTrs[UnityEngine.Random.Range(0, spawnDatas.Count)].position;
-            PoolingManager.instance.Pop(popName, spawnPos);
+            PoolingManager.Instance.Pop(popName, spawnPos);
 
             spawnDatas[nowWave].enemyTuples[randomIndex].cnt--;
             if (spawnDatas[nowWave].enemyTuples[randomIndex].cnt <= 0)
