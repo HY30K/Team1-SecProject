@@ -19,10 +19,4 @@ public class Enemy : MonoBehaviour
         AgentData enemyData = Resources.Load<AgentData>($"EnemySO/{enemySOName}");
         enemyData = new AgentData(out hp, out attack, out speed, out attackDelay, out range, out attackRange);
     }
-
-    protected virtual void Die()
-    {
-        WaveSystem.Instance.DieEnemy();
-        PoolingManager.Instance.Push(gameObject);
-    }
 }

@@ -11,19 +11,26 @@ public abstract class Unit : MonoBehaviour
     [Header("SOName")]
     [SerializeField] private string unitSOName;
 
-    protected float hp;
     protected float speed;
     protected float attack;
     protected float attackDelay;
     protected float range;
     protected float attackRange;
 
+    protected Rigidbody2D rb;
+    protected EnemyHP enemyHP;
     protected Transform enemyTrs;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        enemyHP = GetComponent<EnemyHP>();
+    }
 
     private void OnEnable() // »ý¼º ½Ã
     {
         AgentData enemyData = Resources.Load<AgentData>($"EnemySO/{unitSOName}");
-        enemyData = new AgentData(out hp, out attack, out speed, out attackDelay, out range, out attackRange);
+        enemyData = new AgentData(out enemyHP.hp, out attack, out speed, out attackDelay, out range, out attackRange);
 
         state = State.IDLE;
     }
@@ -99,13 +106,6 @@ public abstract class Unit : MonoBehaviour
     protected abstract void Idle();
     protected abstract void Chase();
     protected abstract void Attack();
-
-    protected virtual void Die()
-    {
-        state = State.DIE;
-        WaveSystem.Instance.DieUnit();
-        PoolingManager.Instance.Push(gameObject);
-    }
 
     private void OnDrawGizmos()
     {
