@@ -16,7 +16,17 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnEnable()//생성 or Pop시에 능력치 초기화
     {
+        DataSetting();
+    }
+
+    void DataSetting()
+    {
         AgentData enemyData = Resources.Load<AgentData>($"EnemySO/{enemySOName}");
-        enemyData = new AgentData(out hp, out attack, out speed, out attackDelay, out range, out attackRange);
+        hp = enemyData.hp;
+        speed = enemyData.speed;
+        attack = enemyData.attack;
+        attackDelay = enemyData.attackDelay;
+        range = enemyData.range;
+        attackRange = enemyData.attackRange;
     }
 }

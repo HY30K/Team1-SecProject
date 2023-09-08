@@ -18,26 +18,34 @@ public abstract class Unit : MonoBehaviour
     protected float attackRange;
 
     protected Rigidbody2D rb;
-    protected EnemyHP enemyHP;
+    protected UnitHp unitHp;
     protected Transform enemyTrs;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        enemyHP = GetComponent<EnemyHP>();
+        unitHp = GetComponent<UnitHp>();
     }
 
     private void OnEnable() // 생성 시
     {
-        AgentData enemyData = Resources.Load<AgentData>($"EnemySO/{unitSOName}");
-        enemyData = new AgentData(out enemyHP.hp, out attack, out speed, out attackDelay, out range, out attackRange);
-
+        DataSetting();
         state = State.IDLE;
     }
 
     private void Update()
     {
         UnitBrain();
+    }
+
+    void DataSetting()
+    {
+        AgentData unitData = Resources.Load<AgentData>($"UnitSO/{unitSOName}");
+        unitHp.hp = unitData.hp;
+        attack = unitData.attack;
+        attackDelay = unitData.attackDelay;
+        range = unitData.range;
+        attackRange = unitData.attackRange;
     }
 
     private void UnitBrain()
@@ -66,6 +74,7 @@ public abstract class Unit : MonoBehaviour
 
     protected void ChaseNode()
     {
+        Debug.Log("CHASE");
         Chase();
 
         if (!DetectionRange(range))
@@ -87,9 +96,18 @@ public abstract class Unit : MonoBehaviour
     protected bool DetectionRange(float range) //idle <=> chase
     {
         Collider2D[] getRange = Physics2D.OverlapCircleAll(transform.position, range, LayerMask.GetMask("Enemy"));
+        //Debug.Log(getRange.Length);
         if (getRange.Length > 0)
         {
-            enemyTrs = getRange[0].transform;
+            float length = 99;
+            foreach (Collider2D enemys in getRange)
+            {
+                if (Vector2.Distance(enemys.transform.position, transform.position) < length)
+                {
+                    length = Vector2.Distance(enemys.transform.position, transform.position);
+                    enemyTrs = enemys.transform;
+                }
+            }
 
             return true;
         }
@@ -101,6 +119,12 @@ public abstract class Unit : MonoBehaviour
     {
         float length = Vector2.Distance(enemyTrs.position, transform.position);
         return length <= range ? true : false; 
+    }
+
+    public void HitUnit(Transform enemy)//용사한테 맞았을때
+    {
+        state = State.CHASE;
+        enemyTrs = enemy;
     }
 
     protected abstract void Idle();
