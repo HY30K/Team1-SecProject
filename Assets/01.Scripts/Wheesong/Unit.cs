@@ -42,6 +42,7 @@ public abstract class Unit : MonoBehaviour
     {
         AgentData unitData = Resources.Load<AgentData>($"UnitSO/{unitSOName}");
         unitHp.hp = unitData.hp;
+        speed = unitData.speed;
         attack = unitData.attack;
         attackDelay = unitData.attackDelay;
         range = unitData.range;
@@ -74,7 +75,6 @@ public abstract class Unit : MonoBehaviour
 
     protected void ChaseNode()
     {
-        Debug.Log("CHASE");
         Chase();
 
         if (!DetectionRange(range))

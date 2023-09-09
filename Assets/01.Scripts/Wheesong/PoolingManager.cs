@@ -13,7 +13,7 @@ public class PoolingManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null) instance = this;
 
         GameObject beenObj = new GameObject("PoolingData");
         Destroy(beenObj);

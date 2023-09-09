@@ -39,6 +39,16 @@ public class WaveSystem : MonoBehaviour
     const float hpUpgradeGrape = 1.15f;
     const float attackUpgradeGrape = 1.1f;
 
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+    }
+
+    private void Start()
+    {
+        NextWave();
+    }
+
     public void NextWave()
     {
         isWaving = isSpawning = true;

@@ -32,6 +32,9 @@ public class Living : MonoBehaviour
     public virtual void OnHit(float dmg)
     {
         hp -= dmg;
+
+        if (hp <= 0)
+            Die();
     }
 
     protected virtual void Die()

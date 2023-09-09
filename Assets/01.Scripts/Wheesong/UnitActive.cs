@@ -21,7 +21,7 @@ public class UnitActive : Unit
     protected override void Attack()//공격
     {
         if (!canAttack) return;
-        UnityEngine.Debug.Log("공격1");
+        
         enemyTrs.GetComponent<EnemyHP>().OnHit(attack);
         canAttack = false;
         StartCoroutine(AttackDelay());
