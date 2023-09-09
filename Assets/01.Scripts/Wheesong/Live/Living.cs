@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class Living : MonoBehaviour
     private Transform sliderValue;
 
     const float hpbarPosX = 1f;
-    public float hp;
+    protected float hp;
     protected float maxHp;
 
     protected virtual void OnEnable()
@@ -19,14 +20,15 @@ public class Living : MonoBehaviour
         sliderValue = hpBar.transform.GetChild(0);
     }
 
-    private void Start()
-    {
-        maxHp = hp;
-    }
-
     protected virtual void Update()
     {
         sliderValue.localScale = new Vector3(hp / maxHp, 1, 0);
+    }
+
+    public void HpSetting(float setHp)
+    {
+        maxHp = setHp;
+        hp = maxHp;
     }
 
     public virtual void OnHit(float dmg)

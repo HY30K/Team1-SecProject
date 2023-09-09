@@ -18,13 +18,13 @@ public abstract class Unit : MonoBehaviour
     protected float attackRange;
 
     protected Rigidbody2D rb;
-    protected UnitHp unitHp;
+    protected Living livingHp;
     protected Transform enemyTrs;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        unitHp = GetComponent<UnitHp>();
+        livingHp = GetComponent<Living>();
     }
 
     private void OnEnable() // 생성 시
@@ -41,7 +41,7 @@ public abstract class Unit : MonoBehaviour
     void DataSetting()
     {
         AgentData unitData = Resources.Load<AgentData>($"UnitSO/{unitSOName}");
-        unitHp.hp = unitData.hp;
+        livingHp.HpSetting(unitData.hp);
         speed = unitData.speed;
         attack = unitData.attack;
         attackDelay = unitData.attackDelay;
@@ -79,24 +79,28 @@ public abstract class Unit : MonoBehaviour
 
         if (!DetectionRange(range))
         {
+            rb.velocity = Vector2.zero;
             state = State.IDLE;
         }
         else if (DetectionLength(attackRange))
+        {
+            rb.velocity = Vector2.zero;
             state = State.ATTACK;
+        }
     }
 
     protected void AttackNode()
     {
         Attack();
 
-        if (!DetectionLength(attackRange))
+        if (!DetectionLength(attackRange) ||
+            !enemyTrs.gameObject.activeSelf) //때리던 얘가 죽었을때
             state = State.CHASE;
     }
 
     protected bool DetectionRange(float range) //idle <=> chase
     {
         Collider2D[] getRange = Physics2D.OverlapCircleAll(transform.position, range, LayerMask.GetMask("Enemy"));
-        //Debug.Log(getRange.Length);
         if (getRange.Length > 0)
         {
             float length = 99;
@@ -108,7 +112,6 @@ public abstract class Unit : MonoBehaviour
                     enemyTrs = enemys.transform;
                 }
             }
-
             return true;
         }
         enemyTrs = null;

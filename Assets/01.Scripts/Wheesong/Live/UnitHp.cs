@@ -7,7 +7,7 @@ public class UnitHp : Living
     protected override void Die()
     {
         base.Die();
-        WaveSystem.Instance.DieEnemy();
+        WaveSystem.Instance.DieUnit();
         PoolingManager.Instance.Push(gameObject);
     }
 }

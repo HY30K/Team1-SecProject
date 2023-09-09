@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3309794009524701942}
   - component: {fileID: 8074235118205749804}
   - component: {fileID: 5662888050205365683}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TestUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,4 +177,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBarPrefab: {fileID: 1066664753743900291, guid: f3d66360e9c1f494c9989047a1272211, type: 3}
-  hp: 0

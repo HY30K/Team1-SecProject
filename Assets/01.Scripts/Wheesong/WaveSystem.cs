@@ -21,6 +21,8 @@ public class WaveSystem : MonoBehaviour
     private static WaveSystem instance;
     public static WaveSystem Instance { get { return instance; } }
 
+    public Dictionary<string, AgentData> enemyDatas = new Dictionary<string, AgentData>();
+
     [Header("Spawn")]
     [SerializeField] private List<SpawnData> spawnDatas = new List<SpawnData>();
     [SerializeField] private Transform[] spawnTrs;
@@ -42,11 +44,18 @@ public class WaveSystem : MonoBehaviour
     private void Awake()
     {
         if(instance == null) instance = this;
+
+        foreach (AgentData enemyData in Resources.LoadAll<AgentData>("EnemySO"))
+        {
+            enemyDatas.Add(enemyData.name, Instantiate(enemyData));
+        }
+        //enemyDatas = Resources.LoadAll<AgentData>("EnemySO");
     }
 
-    private void Start()
+    private void Update()
     {
-        NextWave();
+        if(Input.GetKeyDown(KeyCode.W))
+            NextWave();
     }
 
     public void NextWave()
@@ -59,8 +68,7 @@ public class WaveSystem : MonoBehaviour
 
     private void EnemyDataUpgrade()
     {
-        AgentData[] enemyDatas = Resources.LoadAll<AgentData>("EnemySO");
-        foreach (AgentData enemyData in enemyDatas)
+        foreach (AgentData enemyData in enemyDatas.Values)
         {
             enemyData.hp *= hpUpgradeGrape;
             enemyData.attack *= attackUpgradeGrape;

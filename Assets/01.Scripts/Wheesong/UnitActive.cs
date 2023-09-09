@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class UnitActive : Unit
@@ -25,6 +24,14 @@ public class UnitActive : Unit
         enemyTrs.GetComponent<EnemyHP>().OnHit(attack);
         canAttack = false;
         StartCoroutine(AttackDelay());
+    }
+
+    public void OnAggro(Transform enemy)
+    {
+        if (state != State.IDLE) return;
+
+        state = State.CHASE;
+        enemyTrs = enemy;
     }
 
     private IEnumerator AttackDelay()
