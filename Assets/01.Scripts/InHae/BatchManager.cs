@@ -15,14 +15,8 @@ public class BatchManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if(Instance != null) Destroy(gameObject);
+        Instance = this;
     }
 
     private void Start()
@@ -46,7 +40,16 @@ public class BatchManager : MonoBehaviour
 
     public void UnitBatch(Vector2 batchPos, string unitName)
     {
-        Instantiate(unitsDictionary[unitName], batchPos, quaternion.identity);
-        Destroy(currentUnitAlpha);
+        if (BatchCheck.batchble)
+        {
+            currentUnitAlpha.transform.Find("BatchArea").gameObject.SetActive(false);
+            Instantiate(unitsDictionary[unitName], batchPos, quaternion.identity);
+            Destroy(currentUnitAlpha);
+        }
+        else
+        {
+            currentUnitAlpha.transform.Find("BatchArea").gameObject.SetActive(false);
+            Destroy(currentUnitAlpha);
+        }
     }
 }
