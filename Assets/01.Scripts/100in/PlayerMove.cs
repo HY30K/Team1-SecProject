@@ -9,7 +9,6 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         _rig2D = GetComponent<Rigidbody2D>();
-        Debug.Log(qwer.qwer);
     }
     private void FixedUpdate()
     {

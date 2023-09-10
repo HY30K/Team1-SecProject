@@ -4,10 +4,10 @@
             <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="7" view-data-key="7" style="flex-grow: 1;" />
             <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="6" view-data-key="6" style="flex-grow: 1;" />
             <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="5" view-data-key="5" style="flex-grow: 1;" />
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="4" view-data-key="4" style="flex-grow: 1;" />
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="3" view-data-key="3" style="flex-grow: 1;" />
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="2" view-data-key="2" style="flex-grow: 1;" />
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="1" view-data-key="1" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/07.Assets/Player/Animations/antlered%20rascal/AntleredRascalIdleFront/antleredrascalidleFront.aseprite?fileID=-5196432901720116967&amp;guid=1304184498f8fd348838e029f674065e&amp;type=3#antleredrascalidleFront_Frame_2&apos;); -unity-background-image-tint-color: rgb(255, 255, 255); display: flex; visibility: visible;" />
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="4" view-data-key="4" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/01.Scripts/White%201x1.png?fileID=21300000&amp;guid=0c29eba63d66e774096195a781725f3d&amp;type=3#White 1x1&apos;);" />
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="3" view-data-key="3" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/01.Scripts/White%201x1.png?fileID=21300000&amp;guid=0c29eba63d66e774096195a781725f3d&amp;type=3#White 1x1&apos;);" />
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="2" view-data-key="2" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/01.Scripts/White%201x1.png?fileID=21300000&amp;guid=0c29eba63d66e774096195a781725f3d&amp;type=3#White 1x1&apos;);" />
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="1" view-data-key="1" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/01.Scripts/White%201x1.png?fileID=21300000&amp;guid=0c29eba63d66e774096195a781725f3d&amp;type=3#White 1x1&apos;); -unity-background-image-tint-color: rgb(255, 255, 255); display: flex; visibility: visible;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
