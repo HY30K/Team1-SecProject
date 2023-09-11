@@ -40,16 +40,13 @@ public class BatchManager : MonoBehaviour
 
     public void UnitBatch(Vector2 batchPos, string unitName)
     {
-        if (BatchCheck.batchble)
+        if (BatchCheck.batchble && BatchTile.Instance.IsBatchAble(batchPos))
         {
             currentUnitAlpha.transform.Find("BatchArea").gameObject.SetActive(false);
-            Instantiate(unitsDictionary[unitName], batchPos, quaternion.identity);
+            Instantiate(unitsDictionary[unitName], BatchTile.Instance.Vector2IntPos(batchPos), quaternion.identity);
             Destroy(currentUnitAlpha);
         }
         else
-        {
-            currentUnitAlpha.transform.Find("BatchArea").gameObject.SetActive(false);
             Destroy(currentUnitAlpha);
         }
-    }
 }
