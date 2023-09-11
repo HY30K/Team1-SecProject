@@ -124,12 +124,6 @@ public abstract class Unit : MonoBehaviour
         return length <= range ? true : false; 
     }
 
-    public void HitUnit(Transform enemy)//용사한테 맞았을때
-    {
-        state = State.CHASE;
-        enemyTrs = enemy;
-    }
-
     protected abstract void Idle();
     protected abstract void Chase();
     protected abstract void Attack();

@@ -958,7 +958,7 @@ MonoBehaviour:
   - {fileID: 1007929753}
   - {fileID: 2048524091}
   - {fileID: 738040992}
-  spawnTime: 0.1
+  spawnTime: 0.3
   devilHp: {fileID: 1770679489}
   nextBtn: {fileID: 1014876577}
   turnningText: {fileID: 1209328582}

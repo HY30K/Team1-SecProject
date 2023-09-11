@@ -7,6 +7,12 @@ public class EnemyActive : Enemy
 {
     bool canAttack = true;
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        canAttack = true;
+    }
+
     protected override void Idle()
     {
         
@@ -22,19 +28,20 @@ public class EnemyActive : Enemy
     {
         if (!canAttack) return;
 
-        unitTrs.GetComponent<UnitHp>().OnHit(attack);
         canAttack = false;
         StartCoroutine(AttackDelay());
     }
 
     private void OnDisable()
     {
+        canAttack = false;
         StopAllCoroutines();
     }
 
     private IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(attackDelay);
+        unitTrs.GetComponent<UnitHp>().OnHit(attack);
         canAttack = true;
     }
 }
