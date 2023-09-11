@@ -27,6 +27,11 @@ public class EnemyActive : Enemy
         StartCoroutine(AttackDelay());
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(attackDelay);

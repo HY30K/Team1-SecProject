@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,10 +31,13 @@ public class WaveSystem : MonoBehaviour
     [SerializeField] private Transform[] spawnTrs;
     [SerializeField] private float spawnTime;
 
-    [Header("Other")]
+    [Header("UI")]
     [SerializeField] private DevilHp devilHp;
-    [SerializeField] private Transform unitParent;
     [SerializeField] private Button nextBtn;
+    [SerializeField] private TextMeshProUGUI turnningText;
+
+    [Header("Obj")]
+    [SerializeField] private Transform unitParent;
 
     [HideInInspector] public int nowWave { get; private set; }
     [HideInInspector] public bool isWaving { get; private set; }
@@ -62,9 +67,16 @@ public class WaveSystem : MonoBehaviour
 
         isWaving = isSpawning = true;
         waveUnitCnt = unitParent.childCount;
+        turnningText.text = $"WAVE {nowWave}";
 
-        EnemyDataUpgrade();
-        StartCoroutine(ParallelSpawnEnemy());
+        turnningText.transform.DOMoveX(960, 0.5f).SetEase(Ease.OutCubic).OnComplete(() => {
+            turnningText.transform.DOMoveX(2500, 0.5f).SetEase(Ease.InCubic);
+        });
+
+        nextBtn.transform.DOMoveX(2200, 1f).SetEase(Ease.OutCubic).OnComplete(() =>{
+            EnemyDataUpgrade();
+            StartCoroutine(ParallelSpawnEnemy());
+        });
     }
 
     private void EnemyDataUpgrade()
@@ -81,6 +93,7 @@ public class WaveSystem : MonoBehaviour
         waveEnemyCnt--;
         if (waveEnemyCnt <= 0 && !isSpawning)
         {
+            WaveEnd();
             PlayerWin();
             isWaving = false;
         }
@@ -92,19 +105,32 @@ public class WaveSystem : MonoBehaviour
         if (waveUnitCnt <= 0)
         {
             StopAllCoroutines();
+            WaveEnd();
             PlayerLose();
             isWaving = false;
         }
     }
 
-    private void PlayerWin()//할거 없는거 같은데...
+    private void WaveEnd()//공통적으로 웨이브 끝나고 할 거
     {
         nowWave++;
+
+        turnningText.transform.DOMoveX(960, 0.5f).SetEase(Ease.OutCubic).OnComplete(() => {
+            turnningText.transform.DOMoveX(2500, 0.5f).SetEase(Ease.InCubic);
+        });
+
+        nextBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $" Wave {nowWave}";
+        nextBtn.transform.DOMoveX(1460, 1f).SetEase(Ease.OutCubic);
+    }
+
+    private void PlayerWin()//할거 없는거 같은데...
+    {
+        turnningText.text = "Wave Win!";
     }
 
     private void PlayerLose()
     {
-        nowWave++;
+        turnningText.text = "Wave Lose!";
 
         //남아있는 적들 pop해주기
         Enemy[] enemies = FindObjectsOfType<Enemy>();

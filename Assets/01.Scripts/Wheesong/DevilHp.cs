@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class DevilHp : MonoBehaviour
 {
     private Slider devilSlsider;
     private float devilMaxhp;
-    private float devilHp;
+    public float devilHp;
+    float a = 10;
 
     private void Awake()
     {
@@ -18,7 +20,13 @@ public class DevilHp : MonoBehaviour
 
     public void OnHit(float dmg)
     {
-        devilHp = Mathf.Lerp(devilHp, devilHp - dmg, 0.1f);
-        devilSlsider.value = devilHp;
+        float nDmg = devilHp - dmg;
+        DOTween.To(() => devilHp, x => devilHp = x, nDmg, 1f).SetEase(Ease.OutCubic);
+        DOTween.To(() => devilSlsider.value, x => devilSlsider.value = x, nDmg, 1f).SetEase(Ease.OutCubic);
+    }
+
+    public void OnHeel(float heel)
+    {
+
     }
 }
