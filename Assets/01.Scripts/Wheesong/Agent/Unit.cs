@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public enum State { IDLE = 0, CHASE = 1, ATTACK = 2, DIE = 3, NULL = 4}
+
+public abstract class Unit : MonoBehaviour
 {
     public State state;
 
     [Header("SOName")]
-    [SerializeField] private string enemySOName;
+    [SerializeField] private string unitSOName;
 
     protected float speed;
     protected float attack;
@@ -17,7 +19,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected Living livingHp;
-    protected Transform unitTrs;
+    protected Transform enemyTrs;
 
     private void Awake()
     {
@@ -25,26 +27,26 @@ public abstract class Enemy : MonoBehaviour
         livingHp = GetComponent<Living>();
     }
 
-    protected virtual void OnEnable()//생성 or Pop시에 능력치 초기화
+    private void OnEnable() // 생성 시
     {
         DataSetting();
         state = State.IDLE;
     }
 
-    void DataSetting()
-    {
-        AgentData enemyData = WaveSystem.Instance.enemyDatas[enemySOName];
-        livingHp.HpSetting(enemyData.hp);
-        speed = enemyData.speed;
-        attack = enemyData.attack;
-        attackDelay = enemyData.attackDelay;
-        range = enemyData.range;
-        attackRange = enemyData.attackRange;
-    }
-
     private void Update()
     {
         UnitBrain();
+    }
+
+    void DataSetting()
+    {
+        AgentData unitData = Resources.Load<AgentData>($"UnitSO/{unitSOName}");
+        livingHp.HpSetting(unitData.hp);
+        speed = unitData.Speed;
+        attack = unitData.attack;
+        attackDelay = unitData.AttackDelay;
+        range = unitData.Range;
+        attackRange = unitData.AttackRange;
     }
 
     private void UnitBrain()
@@ -67,17 +69,15 @@ public abstract class Enemy : MonoBehaviour
     {
         Idle();
 
-        if (FindUnit())
-        {
+        if (DetectionRange(range))
             state = State.CHASE;
-        }
     }
 
     protected void ChaseNode()
     {
         Chase();
 
-        if (!FindUnit())
+        if (!DetectionRange(range))
         {
             rb.velocity = Vector2.zero;
             state = State.IDLE;
@@ -94,34 +94,40 @@ public abstract class Enemy : MonoBehaviour
         Attack();
 
         if (!DetectionLength(attackRange) ||
-            !unitTrs.gameObject.activeSelf) //때리던 얘가 죽었을때
+            !enemyTrs.gameObject.activeSelf) //때리던 얘가 죽었을때
             state = State.CHASE;
     }
 
-    private bool FindUnit()
+    protected bool DetectionRange(float range) //idle <=> chase
     {
-        Unit[] units = FindObjectsOfType<Unit>();
-        if (units.Length > 0)
+        Collider2D[] getRange = Physics2D.OverlapCircleAll(transform.position, range, LayerMask.GetMask("Enemy"));
+        if (getRange.Length > 0)
         {
             float length = 99;
-            foreach (Unit unit in units)
+            foreach (Collider2D enemys in getRange)
             {
-                if (Vector2.Distance(unit.transform.position, transform.position) < length)
+                if (Vector2.Distance(enemys.transform.position, transform.position) < length)
                 {
-                    length = Vector2.Distance(unit.transform.position, transform.position);
-                    unitTrs = unit.transform;
+                    length = Vector2.Distance(enemys.transform.position, transform.position);
+                    enemyTrs = enemys.transform;
                 }
             }
             return true;
         }
-        unitTrs = null;
+        enemyTrs = null;
         return false;
     }
 
     protected bool DetectionLength(float range) //chase <=> attack
     {
-        float length = Vector2.Distance(unitTrs.position, transform.position);
-        return length <= range ? true : false;
+        float length = Vector2.Distance(enemyTrs.position, transform.position);
+        return length <= range ? true : false; 
+    }
+
+    public void HitUnit(Transform enemy)//용사한테 맞았을때
+    {
+        state = State.CHASE;
+        enemyTrs = enemy;
     }
 
     protected abstract void Idle();

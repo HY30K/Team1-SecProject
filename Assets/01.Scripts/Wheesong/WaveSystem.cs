@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class EnemyTuple<T1, T2>
@@ -28,8 +29,10 @@ public class WaveSystem : MonoBehaviour
     [SerializeField] private Transform[] spawnTrs;
     [SerializeField] private float spawnTime;
 
-    [Header("Obj")]
+    [Header("Other")]
+    [SerializeField] private DevilHp devilHp;
     [SerializeField] private Transform unitParent;
+    [SerializeField] private Button nextBtn;
 
     [HideInInspector] public int nowWave { get; private set; }
     [HideInInspector] public bool isWaving { get; private set; }
@@ -49,19 +52,17 @@ public class WaveSystem : MonoBehaviour
         {
             enemyDatas.Add(enemyData.name, Instantiate(enemyData));
         }
-        //enemyDatas = Resources.LoadAll<AgentData>("EnemySO");
-    }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.W))
-            NextWave();
+        nextBtn.onClick.AddListener(NextWave);
     }
 
     public void NextWave()
     {
+        if (isWaving) return;
+
         isWaving = isSpawning = true;
         waveUnitCnt = unitParent.childCount;
+
         EnemyDataUpgrade();
         StartCoroutine(ParallelSpawnEnemy());
     }
@@ -98,11 +99,13 @@ public class WaveSystem : MonoBehaviour
 
     private void PlayerWin()//할거 없는거 같은데...
     {
-        
+        nowWave++;
     }
 
     private void PlayerLose()
     {
+        nowWave++;
+
         //남아있는 적들 pop해주기
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (Enemy dummyenemy in enemies)
@@ -110,6 +113,7 @@ public class WaveSystem : MonoBehaviour
             PoolingManager.Instance.Push(dummyenemy.gameObject);
         }
         //마왕체력 깎기
+        devilHp.OnHit(20);
     }
 
     private IEnumerator SequentiallySpawnEnemy() //위에있는 순부터 차례대로 생성
