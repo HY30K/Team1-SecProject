@@ -19,7 +19,7 @@ public class BatchTile : MonoBehaviour
     {
         TileBase tileBase = null;
         tileBase = _tilemap.GetTile(_tilemap.WorldToCell(position));
-        return tileBase != null;
+        return tileBase;
     }
 
     public Vector2 Vector2IntPos(Vector2 position)
