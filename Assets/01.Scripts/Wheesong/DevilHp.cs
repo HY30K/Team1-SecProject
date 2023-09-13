@@ -9,7 +9,6 @@ public class DevilHp : MonoBehaviour
     private Slider devilSlsider;
     private float devilMaxhp;
     public float devilHp;
-    float a = 10;
 
     private void Awake()
     {
