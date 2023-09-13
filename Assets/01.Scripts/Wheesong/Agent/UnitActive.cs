@@ -21,9 +21,13 @@ public class UnitActive : Unit
     {
         if (!canAttack) return;
         
-        enemyTrs.GetComponent<EnemyHP>().OnHit(attack);
         canAttack = false;
         StartCoroutine(AttackDelay());
+    }
+
+    protected override void Die()
+    {
+        col.enabled = false;
     }
 
     public void OnAggro(Transform enemy)
@@ -34,9 +38,17 @@ public class UnitActive : Unit
         enemyTrs = enemy;
     }
 
+    private void OnDisable()
+    {
+        canAttack = false;
+        StopAllCoroutines();
+    }
+
     private IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(attackDelay);
+        if(enemyTrs != null)
+            enemyTrs.GetComponent<EnemyHP>().OnHit(attack);
         canAttack = true;
     }
 }

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9faff768f5abed46b33ae5bec6009e0, type: 3}
   m_Name: TestUnit
   m_EditorClassIdentifier: 
-  hp: 10
+  hp: 20
   attack: 2
   speed: 1
-  attackDelay: 0.5
+  attackDelay: 0.7
   range: 10
   attackRange: 2

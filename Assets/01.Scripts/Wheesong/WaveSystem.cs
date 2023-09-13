@@ -91,7 +91,7 @@ public class WaveSystem : MonoBehaviour
     public void DieEnemy()
     {
         waveEnemyCnt--;
-        if (waveEnemyCnt <= 0 && !isSpawning)
+        if (waveEnemyCnt <= 0 && !isSpawning && isWaving)
         {
             WaveEnd();
             PlayerWin();
@@ -102,9 +102,9 @@ public class WaveSystem : MonoBehaviour
     public void DieUnit()
     {
         waveUnitCnt--;
-        if (waveUnitCnt <= 0)
+        if (waveUnitCnt <= 0 && isWaving)
         {
-            StopAllCoroutines();
+            StopCoroutine(ParallelSpawnEnemy());
             WaveEnd();
             PlayerLose();
             isWaving = false;
@@ -133,10 +133,10 @@ public class WaveSystem : MonoBehaviour
         turnningText.text = "Wave Lose!";
 
         //남아있는 적들 pop해주기
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
-        foreach (Enemy dummyenemy in enemies)
+        EnemyHP[] enemies = FindObjectsOfType<EnemyHP>();
+        foreach (EnemyHP dummyenemy in enemies)
         {
-            PoolingManager.Instance.Push(dummyenemy.gameObject);
+            dummyenemy.Die();
         }
         //마왕체력 깎기
         devilHp.OnHit(20);

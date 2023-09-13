@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class Living : MonoBehaviour
@@ -13,11 +14,13 @@ public class Living : MonoBehaviour
     const float hpbarPosX = 1f;
     protected float hp;
     protected float maxHp;
+    protected bool isDie;
 
     protected virtual void OnEnable()
     {
         hpBar = PoolingManager.Instance.Pop(hpBarPrefab.name, transform.position + new Vector3(0, hpbarPosX), transform);
         sliderValue = hpBar.transform.GetChild(0);
+        isDie = false;
     }
 
     protected virtual void Update()
@@ -35,11 +38,14 @@ public class Living : MonoBehaviour
     {
         hp -= dmg;
 
-        if (hp <= 0)
+        if (hp <= 0 && !isDie)
+        {
+            isDie = true;
             Die();
+        }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         PoolingManager.Instance.Push(hpBar);
     }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3309794009524701942}
   - component: {fileID: 8074235118205749804}
   - component: {fileID: 5662888050205365683}
+  - component: {fileID: 8227515139885820367}
   m_Layer: 7
   m_Name: TestUnit
   m_TagString: Untagged
@@ -177,3 +178,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBarPrefab: {fileID: 1066664753743900291, guid: f3d66360e9c1f494c9989047a1272211, type: 3}
+--- !u!95 &8227515139885820367
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706738387598235632}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 17416659cc086114ba98756fe74c76f2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

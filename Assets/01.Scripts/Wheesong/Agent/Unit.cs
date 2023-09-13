@@ -18,24 +18,34 @@ public abstract class Unit : MonoBehaviour
     protected float attackRange;
 
     protected Rigidbody2D rb;
+    protected SpriteRenderer sp;
+    protected Collider2D col;
+    protected Animator anim;
     protected Living livingHp;
     protected Transform enemyTrs;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sp = GetComponent<SpriteRenderer>();
+        col = GetComponent<Collider2D>();
+        anim = GetComponent<Animator>();
         livingHp = GetComponent<Living>();
     }
 
     private void OnEnable() // »ý¼º ½Ã
     {
         DataSetting();
+        col.enabled = true;
         state = State.IDLE;
     }
 
     private void Update()
     {
         UnitBrain();
+
+        if (enemyTrs != null)
+            sp.flipX = enemyTrs.position.x - transform.position.x > 0 ? false : true;
     }
 
     void DataSetting()
@@ -54,13 +64,20 @@ public abstract class Unit : MonoBehaviour
         switch (state)
         {
             case State.IDLE:
+                anim.SetTrigger("Idle");
                 IdleNode();
                 break;
             case State.CHASE:
+                anim.SetTrigger("Chase");
                 ChaseNode();
                 break;
             case State.ATTACK:
+                anim.SetTrigger("Attack");
                 AttackNode();
+                break;
+            case State.DIE:
+                anim.SetTrigger("Die");
+                DieNode();
                 break;
         }
     }
@@ -98,6 +115,11 @@ public abstract class Unit : MonoBehaviour
             state = State.CHASE;
     }
 
+    protected void DieNode()
+    {
+        Die();
+    }
+
     protected bool DetectionRange(float range) //idle <=> chase
     {
         Collider2D[] getRange = Physics2D.OverlapCircleAll(transform.position, range, LayerMask.GetMask("Enemy"));
@@ -121,12 +143,15 @@ public abstract class Unit : MonoBehaviour
     protected bool DetectionLength(float range) //chase <=> attack
     {
         float length = Vector2.Distance(enemyTrs.position, transform.position);
+        if (enemyTrs.GetComponent<Enemy>().state == State.DIE)
+            return false;
         return length <= range ? true : false; 
     }
 
     protected abstract void Idle();
     protected abstract void Chase();
     protected abstract void Attack();
+    protected abstract void Die();
 
     private void OnDrawGizmos()
     {

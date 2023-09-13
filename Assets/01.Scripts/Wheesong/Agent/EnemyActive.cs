@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyActive : Enemy
@@ -32,6 +33,11 @@ public class EnemyActive : Enemy
         StartCoroutine(AttackDelay());
     }
 
+    protected override void Die()
+    {
+        col.enabled = false;
+    }
+
     private void OnDisable()
     {
         canAttack = false;
@@ -41,7 +47,11 @@ public class EnemyActive : Enemy
     private IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(attackDelay);
-        unitTrs.GetComponent<UnitHp>().OnHit(attack);
+        if (unitTrs != null)
+        {
+            unitTrs.GetComponent<UnitHp>().OnHit(attack);
+            unitTrs.GetComponent<UnitActive>().OnAggro(transform);
+        }
         canAttack = true;
     }
 }
