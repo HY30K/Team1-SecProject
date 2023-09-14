@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9faff768f5abed46b33ae5bec6009e0, type: 3}
-  m_Name: TestUnit
+  m_Name: Hero
   m_EditorClassIdentifier: 
-  hp: 100
-  attack: 0.1
-  speed: 1
-  attackDelay: 0.7
-  range: 10
-  attackRange: 2
+  hp: 16
+  attack: 1.9
+  speed: 0.9
+  attackDelay: 0.6
+  range: 0
+  attackRange: 1.6

@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 109412131299881997, guid: 8d9fe91ec3be3f34bba239a4553d47b7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 4723107735738678597, guid: 0bd97e23f8b532a4f8969605a3b00a4e, type: 3}
+      objectReference: {fileID: 4723107735738678597, guid: 174209194dbf2fb44aef1ea1ba76a2f1, type: 3}
     - target: {fileID: 1831735284810981234, guid: 8d9fe91ec3be3f34bba239a4553d47b7, type: 3}
       propertyPath: m_Name
       value: Knight
@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7379836920549290772, guid: 8d9fe91ec3be3f34bba239a4553d47b7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.6600003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7379836920549290772, guid: 8d9fe91ec3be3f34bba239a4553d47b7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7379836920549290772, guid: 8d9fe91ec3be3f34bba239a4553d47b7, type: 3}
       propertyPath: m_LocalPosition.z

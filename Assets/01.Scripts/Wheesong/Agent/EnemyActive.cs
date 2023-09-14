@@ -35,7 +35,7 @@ public class EnemyActive : Enemy
 
     protected override void Die()//죽을때 해줄거(아직 없음)
     {
-        
+        col.enabled = false;
     }
 
     private void OnDisable()

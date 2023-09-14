@@ -11,11 +11,11 @@ public abstract class Unit : MonoBehaviour
     [Header("SOName")]
     [SerializeField] private string unitSOName;
 
-    protected float speed;
-    protected float attack;
-    protected float attackDelay;
-    protected float range;
-    protected float attackRange;
+    public float speed;
+    public float attack;
+    public float attackDelay;
+    public float range;
+    public float attackRange;
 
     protected Rigidbody2D rb;
     protected SpriteRenderer sp;
