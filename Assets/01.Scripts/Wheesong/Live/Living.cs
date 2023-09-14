@@ -14,7 +14,7 @@ public class Living : MonoBehaviour
     const float hpbarPosX = 1f;
     protected float hp;
     protected float maxHp;
-    protected bool isDie;
+    public bool isDie;
 
     protected virtual void OnEnable()
     {

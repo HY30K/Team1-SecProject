@@ -11,6 +11,7 @@ public class UnitHp : Living
         base.Die();
         unit = GetComponent<Unit>();
         unit.state = State.DIE;
+        unit.isChangeState = true;
 
         StartCoroutine(PushUnit(1));
     }

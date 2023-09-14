@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   unitSOName: TestUnit
+  isChangeState: 0
 --- !u!114 &5662888050205365683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBarPrefab: {fileID: 1066664753743900291, guid: f3d66360e9c1f494c9989047a1272211, type: 3}
+  isDie: 0
 --- !u!95 &8227515139885820367
 Animator:
   serializedVersion: 5
@@ -188,7 +190,7 @@ Animator:
   m_GameObject: {fileID: 2706738387598235632}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 17416659cc086114ba98756fe74c76f2, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

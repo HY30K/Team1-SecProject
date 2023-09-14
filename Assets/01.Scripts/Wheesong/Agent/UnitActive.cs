@@ -25,9 +25,9 @@ public class UnitActive : Unit
         StartCoroutine(AttackDelay());
     }
 
-    protected override void Die()
+    protected override void Die()//죽을때 해줄거(아직 없음)
     {
-        col.enabled = false;
+        
     }
 
     public void OnAggro(Transform enemy)

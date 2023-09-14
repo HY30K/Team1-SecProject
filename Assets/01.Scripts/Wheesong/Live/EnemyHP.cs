@@ -11,6 +11,7 @@ public class EnemyHP : Living
         base.Die();
         enemy = GetComponent<Enemy>();
         enemy.state = State.DIE;
+        enemy.isChangeState = true;
 
         StartCoroutine(PushEnemy(1));
     }

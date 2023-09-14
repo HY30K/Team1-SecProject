@@ -22,6 +22,8 @@ public abstract class Enemy : MonoBehaviour
     protected Living livingHp;
     protected Transform unitTrs;
 
+    public bool isChangeState;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,22 +63,29 @@ public abstract class Enemy : MonoBehaviour
         switch (state)
         {
             case State.IDLE:
-                anim.SetTrigger("Idle");
+                ChangeState("Idle");
                 IdleNode();
                 break;
             case State.CHASE:
-                anim.SetTrigger("Chase");
+                ChangeState("Chase");
                 ChaseNode();
                 break;
             case State.ATTACK:
-                anim.SetTrigger("Attack");
+                ChangeState("Attack");
                 AttackNode();
                 break;
             case State.DIE:
-                anim.SetTrigger("Die");
+                ChangeState("Die");
                 DieNode();
                 break;
         }
+    }
+
+    void ChangeState(string triggerName)
+    {
+        if (!isChangeState) return;
+        isChangeState = false;
+        anim.SetTrigger(triggerName);
     }
 
     protected void IdleNode()
@@ -85,6 +94,7 @@ public abstract class Enemy : MonoBehaviour
 
         if (FindUnit())
         {
+            isChangeState = true;
             state = State.CHASE;
         }
     }
@@ -95,11 +105,13 @@ public abstract class Enemy : MonoBehaviour
 
         if (!FindUnit())
         {
+            isChangeState = true;
             rb.velocity = Vector2.zero;
             state = State.IDLE;
         }
         else if (DetectionLength(attackRange))
         {
+            isChangeState = true;
             rb.velocity = Vector2.zero;
             state = State.ATTACK;
         }
@@ -110,8 +122,11 @@ public abstract class Enemy : MonoBehaviour
         Attack();
 
         if (!DetectionLength(attackRange) ||
-            !unitTrs.gameObject.activeSelf) //¶§¸®´ø ¾ê°¡ Á×¾úÀ»¶§
+            unitTrs.GetComponent<Unit>().state == State.DIE) //¶§¸®´ø ¾ê°¡ Á×¾úÀ»¶§
+        {
+            isChangeState = true;
             state = State.CHASE;
+        }
     }
 
     protected void DieNode()
@@ -127,12 +142,14 @@ public abstract class Enemy : MonoBehaviour
             float length = 99;
             foreach (Unit unit in units)
             {
-                if (Vector2.Distance(unit.transform.position, transform.position) < length)
+                if (Vector2.Distance(unit.transform.position, transform.position) < length && unit.state != State.DIE)
                 {
                     length = Vector2.Distance(unit.transform.position, transform.position);
                     unitTrs = unit.transform;
                 }
             }
+            if (length == 99) 
+                return false;
             return true;
         }
         unitTrs = null;

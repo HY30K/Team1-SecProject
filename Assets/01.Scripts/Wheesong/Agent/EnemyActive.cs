@@ -33,9 +33,9 @@ public class EnemyActive : Enemy
         StartCoroutine(AttackDelay());
     }
 
-    protected override void Die()
+    protected override void Die()//죽을때 해줄거(아직 없음)
     {
-        col.enabled = false;
+        
     }
 
     private void OnDisable()
@@ -50,7 +50,6 @@ public class EnemyActive : Enemy
         if (unitTrs != null)
         {
             unitTrs.GetComponent<UnitHp>().OnHit(attack);
-            unitTrs.GetComponent<UnitActive>().OnAggro(transform);
         }
         canAttack = true;
     }
