@@ -33,9 +33,14 @@ public class BatchManager : MonoBehaviour
         currentUnitAlpha = Instantiate(unitAlphasDictionary[unitAlphaName], batchPos, quaternion.identity);
     }
 
+    public void UnitDestroy()
+    {
+        Destroy(currentUnitAlpha);
+    }
+
     public void UnitAlphaBatch(Vector2 batchPos)
     {
-        currentUnitAlpha.transform.position = batchPos;
+        currentUnitAlpha.transform.position = BatchTile.Instance.Vector2IntPos(batchPos);
     }
 
     public void UnitBatch(Vector2 batchPos, string unitName)
@@ -50,3 +55,4 @@ public class BatchManager : MonoBehaviour
             Destroy(currentUnitAlpha);
         }
 }
+

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDownHandler 
+public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     private string currentUnitName;
     private Camera mainCam;
@@ -29,5 +29,10 @@ public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDow
         currentUnitName = eventData.pointerCurrentRaycast.gameObject.name;
         Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
         BatchManager.Instance.UnitCreate(mousePos, currentUnitName+"Alpha");
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        BatchManager.Instance.UnitDestroy();
     }
 }
