@@ -4,182 +4,243 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEditor;
+
 public class ItemWaitLounge : MonoBehaviour
 {
     private UIDocument _dot;
+    private VisualElement _root;
     [SerializeField] private UnityEvent<Sprite> _SetSprite;
+    private Dictionary<string, VisualElement> _itemBox = new Dictionary<string, VisualElement>();
+    Vector2 localMousePosition;
 
-    #region itemBox
-    private Button itemBox1;
-    private Button itemBox2;
-    private Button itemBox3;
-    private Button itemBox4;
-    private Button itemBox5;
-    private Button itemBox6;
-    private Button itemBox7;
+    private string _nullImage = "NullSprit(UnityEngine.Sprite)";
+    public Sprite _nullSprite;
+    private VisualElement _itemWait;
+    private static bool OnDrage;
 
-    private Sprite itemSprit1;
-    private Sprite itemSprit2;
-    private Sprite itemSprit3;
-    private Sprite itemSprit4;
-    private Sprite itemSprit5;
-    private Sprite itemSprit6;
-    private Sprite itemSprit7;
+    #region _currentElementSet
+
+    private VisualElement _currentDrageElement;
+    private StyleLength _currentTargetTop;
+    private StyleLength _currentTargetLeft;
     #endregion
 
-    private string _nullImage = "White 1x1 (UnityEngine.Texture2D)";
-    public Sprite _nullSprite;
 
-
+    bool isDragging = false;
 
     private void Awake()
     {
         _dot = GetComponent<UIDocument>();
+        _root = _dot.rootVisualElement;
 
-        itemBox1 = _dot.rootVisualElement.Q<Button>("1");
-        itemBox2 = _dot.rootVisualElement.Q<Button>("2");
-        itemBox3 = _dot.rootVisualElement.Q<Button>("3");
-        itemBox4 = _dot.rootVisualElement.Q<Button>("4");
-        itemBox5 = _dot.rootVisualElement.Q<Button>("5");
-        itemBox6 = _dot.rootVisualElement.Q<Button>("6");
-        itemBox7 = _dot.rootVisualElement.Q<Button>("7");
+        for (int i = 1; i < 8; i++)
+        {
+            _itemBox.Add(i.ToString(), _root.Q<VisualElement>(i.ToString()));
+            _itemBox[i.ToString()].RegisterCallback<MouseDownEvent>(DrageDown);
+            _itemBox[i.ToString()].RegisterCallback<MouseUpEvent>(DrageUp);
+            _itemBox[i.ToString()].RegisterCallback<MouseMoveEvent>(DrageMove);
+            _itemBox[i.ToString()].RegisterCallback<MouseOutEvent>(DrageOut);
+        }
 
-        Init();
-
-    }
-
-    private void Init()
-    {
-        itemBox1.style.backgroundImage = _nullSprite.texture;
-        itemBox2.style.backgroundImage = _nullSprite.texture;
-        itemBox3.style.backgroundImage = _nullSprite.texture;
-        itemBox4.style.backgroundImage = _nullSprite.texture;
-        itemBox5.style.backgroundImage = _nullSprite.texture;
-        itemBox6.style.backgroundImage = _nullSprite.texture;
-        itemBox7.style.backgroundImage = _nullSprite.texture;
-
-        itemBox1.clicked += Drop1;
-        itemBox2.clicked += Drop2;
-        itemBox3.clicked += Drop3;
-        itemBox4.clicked += Drop4;
-        itemBox5.clicked += Drop5;
-        itemBox6.clicked += Drop6;
-        itemBox7.clicked += Drop7;
-
+        _itemWait = _dot.rootVisualElement.Q<VisualElement>("ItemWait");
     }
 
-    public void itemButtonImageSet(Sprite _image)
+    private void DrageOut(MouseOutEvent evt)
     {
-        if (itemBox1.style.backgroundImage.ToString() == _nullImage)
+        if (isDragging)
         {
-            itemSprit1 = _image;
-            itemBox1.style.backgroundImage = _image.texture;
-            Debug.Log("논이노");
-        }
-        else if (itemBox2.style.backgroundImage.ToString() == _nullImage)
-        {
-            itemSprit2 = _image;
-            itemBox2.style.backgroundImage = _image.texture;
-            Debug.Log("논이노");
-        }
-        else if (itemBox3.style.backgroundImage.ToString() == _nullImage)
-        {
-            itemSprit3 = _image;
-            itemBox3.style.backgroundImage = _image.texture;
-            Debug.Log("논이노");
-        }
-        else if (itemBox4.style.backgroundImage.ToString() == _nullImage)
-        {
-            itemSprit4 = _image;
-            itemBox4.style.backgroundImage = _image.texture;
-            Debug.Log("논이노");
-        }
-        else if (itemBox5.style.backgroundImage.ToString() == _nullImage)
-        {
-            itemSprit5 = _image;
-            itemBox5.style.backgroundImage = _image.texture;
-            Debug.Log("논이노");
-        }
-        else if (itemBox6.style.backgroundImage.ToString() == _nullImage)
-        {
-            itemSprit6 = _image;
-            itemBox6.style.backgroundImage = _image.texture;
-            Debug.Log("논이노");
-        }
-        else if (itemBox7.style.backgroundImage.ToString() == _nullImage)
-        {
-            itemSprit7 = _image;
-            itemBox7.style.backgroundImage = _image.texture;
-            Debug.Log("논이노");
+            localMousePosition = _currentDrageElement.ChangeCoordinatesTo(_currentDrageElement.parent, evt.localMousePosition);
         }
     }
-    private void Drop1()
+
+  
+    private void DrageMove(MouseMoveEvent evt)
     {
-        if (itemBox1.style.backgroundImage.ToString() != _nullImage)
+        //a = evt;
+        if (isDragging)
         {
-            _SetSprite?.Invoke(itemSprit1);
-            itemBox1.style.backgroundImage = _nullSprite.texture;
-        }
-    }
-    private void Drop2()
-    {
-        if (itemBox2.style.backgroundImage.ToString() != _nullImage)
-        {
-            _SetSprite?.Invoke(itemSprit2);
-            itemBox2.style.backgroundImage = _nullSprite.texture;
-        }
-    }
-    private void Drop3()
-    {
-        if (itemBox3.style.backgroundImage.ToString() != _nullImage)
-        {
-            _SetSprite?.Invoke(itemSprit3);
-            itemBox3.style.backgroundImage = _nullSprite.texture;
-        }
-    }
-    private void Drop4()
-    {
-        if (itemBox4.style.backgroundImage.ToString() != _nullImage)
-        {
-            _SetSprite?.Invoke(itemSprit4);
-            itemBox4.style.backgroundImage = _nullSprite.texture;
-        }
-    }
-    private void Drop5()
-    {
-        if (itemBox5.style.backgroundImage.ToString() != _nullImage)
-        {
-            _SetSprite?.Invoke(itemSprit5);
-            itemBox5.style.backgroundImage = _nullSprite.texture;
-        }
-    }
-    private void Drop6()
-    {
-        if (itemBox6.style.backgroundImage.ToString() != _nullImage)
-        {
-            _SetSprite?.Invoke(itemSprit6);
-            itemBox6.style.backgroundImage = _nullSprite.texture;
+            // 올바른 UI 요소에서 이벤트가 발생하는지 확인
+            if (_currentDrageElement != null)
+            {
+                //Debug.Log(evt.localMousePosition);
+      
+                
+                localMousePosition = _currentDrageElement.ChangeCoordinatesTo(_currentDrageElement.parent, evt.localMousePosition);
+
+            }
         }
 
     }
-    private void Drop7()
+
+
+    private void DrageUp(MouseUpEvent evt)
     {
-        if (itemBox7.style.backgroundImage.ToString() != _nullImage)
+        _currentDrageElement.style.top = _currentTargetTop;
+        _currentDrageElement.style.left = _currentTargetLeft;
+
+        isDragging = false;
+        if (isDragging)
         {
-            _SetSprite?.Invoke(itemSprit7);
-            itemBox7.style.backgroundImage = _nullSprite.texture;
+            OnDrage = false;
+            if (_currentDrageElement != null)
+            {
+                //_currentDrageElement.style.top = _currentTargetTop;
+                //Debug.Log(_currentTargetTop);
+                //_currentDrageElement.style.left = _currentTargetLeft;
+                //Debug.Log(_currentTargetLeft);
+
+                _currentDrageElement.RemoveFromHierarchy();
+                _currentDrageElement = null;
+            }
         }
     }
-    private void Dorp()
+
+    private void DrageDown(MouseDownEvent evt)
     {
-        //Debug.Log($"itemBox1.style.backgroundImage {itemBox1.style.backgroundImage.ToString()}" ); 
-        //Debug.Log($"itemBox1.style {itemBox1.style}" );
-        //Debug.Log($"itemBox1. {itemBox1}" );
+        isDragging = true;
+        OnDrage = true;
+        _currentDrageElement = evt.target as VisualElement;
+        _currentTargetTop = _currentDrageElement.style.top;
+        _currentTargetLeft = _currentDrageElement.style.left;
     }
+
 
     private void Update()
     {
 
+        if (isDragging)
+        {
+            //localMousePosition = _currentDrageElement.ChangeCoordinatesTo(_currentDrageElement.parent, a.localMousePosition);
+            _currentDrageElement.style.left = localMousePosition.x - (_currentDrageElement.resolvedStyle.width / 2);
+            _currentDrageElement.style.top = localMousePosition.y - (_currentDrageElement.resolvedStyle.height / 2);
+        }
     }
+    //public void itemButtonImageSet( WeaponStatusSO weaponStatusDO)
+    //{
+    //    if (itemBox1.style.backgroundImage.ToString() == _nullImage)
+    //    {
+    //        itemSprit1 = weaponStatusDO.WeaponSprite;
+    //        itemBox1.style.backgroundImage = itemSprit1.texture;
+    //        Debug.Log("논이노");
+    //    }
+    //    else if (itemBox2.style.backgroundImage.ToString() == _nullImage)
+    //    {
+    //        itemSprit2 = weaponStatusDO.WeaponSprite;
+    //        itemBox2.style.backgroundImage = itemSprit2.texture;
+    //        Debug.Log("논이노");
+    //    }
+    //    else if (itemBox3.style.backgroundImage.ToString() == _nullImage)
+    //    {
+    //        itemSprit3 = weaponStatusDO.WeaponSprite;
+    //        itemBox3.style.backgroundImage = itemSprit3.texture;
+    //        Debug.Log("논이노");
+    //    }
+    //    else if (itemBox4.style.backgroundImage.ToString() == _nullImage)
+    //    {
+    //        itemSprit4 = weaponStatusDO.WeaponSprite;
+    //        itemBox4.style.backgroundImage = itemSprit4.texture;
+    //        Debug.Log("논이노");
+    //    }
+    //    else if (itemBox5.style.backgroundImage.ToString() == _nullImage)
+    //    {
+    //        itemSprit5 = weaponStatusDO.WeaponSprite;
+    //        itemBox5.style.backgroundImage = itemSprit5.texture;
+    //        Debug.Log("논이노");
+    //    }
+    //    else if (itemBox6.style.backgroundImage.ToString() == _nullImage)
+    //    {
+    //        itemSprit6 = weaponStatusDO.WeaponSprite;
+    //        itemBox6.style.backgroundImage = itemSprit6.texture;
+    //        Debug.Log("논이노");
+    //    }
+    //    else if (itemBox7.style.backgroundImage.ToString() == _nullImage)
+    //    {
+    //        itemSprit7 = weaponStatusDO.WeaponSprite;
+    //        itemBox7.style.backgroundImage = itemSprit7.texture;
+    //        Debug.Log("논이노");
+    //    }
+    //}
+    //private void Drop1()
+    //{
+    //    if (itemBox1.style.backgroundImage.ToString() != _nullImage)
+    //    {
+    //        _SetSprite?.Invoke(itemSprit1);
+    //        itemBox1.style.backgroundImage = _nullSprite.texture;
+    //        ItemWaitOn();
+    //    }
+    //}
+    //private void Drop2()
+    //{
+    //    if (itemBox2.style.backgroundImage.ToString() != _nullImage)
+    //    {
+    //        _SetSprite?.Invoke(itemSprit2);
+    //        itemBox2.style.backgroundImage = _nullSprite.texture;
+    //        ItemWaitOn();
+    //    }
+    //}
+    //private void Drop3()
+    //{
+    //    if (itemBox3.style.backgroundImage.ToString() != _nullImage)
+    //    {
+    //        _SetSprite?.Invoke(itemSprit3);
+    //        itemBox3.style.backgroundImage = _nullSprite.texture;
+    //        ItemWaitOn();
+    //    }
+    //}
+    //private void Drop4()
+    //{
+    //    if (itemBox4.style.backgroundImage.ToString() != _nullImage)
+    //    {
+    //        _SetSprite?.Invoke(itemSprit4);
+    //        itemBox4.style.backgroundImage = _nullSprite.texture;
+    //        ItemWaitOn();
+    //    }
+    //}
+    //private void Drop5()
+    //{
+    //    if (itemBox5.style.backgroundImage.ToString() != _nullImage)
+    //    {
+    //        _SetSprite?.Invoke(itemSprit5);
+    //        itemBox5.style.backgroundImage = _nullSprite.texture;
+    //        ItemWaitOn();
+    //    }
+    //}
+    //private void Drop6()
+    //{
+    //    if (itemBox6.style.backgroundImage.ToString() != _nullImage)
+    //    {
+    //        _SetSprite?.Invoke(itemSprit6);
+    //        itemBox6.style.backgroundImage = _nullSprite.texture;
+    //        ItemWaitOn();
+    //    }
+
+    //}
+    //private void Drop7()
+    //{
+    //    if (itemBox7.style.backgroundImage.ToString() != _nullImage)
+    //    {
+    //        _SetSprite?.Invoke(itemSprit7);
+    //        itemBox7.style.backgroundImage = _nullSprite.texture;
+    //        ItemWaitOn();
+    //    }
+    //}
+    //private void Dorp()
+    //{
+    //    Debug.Log($"itemBox1.style.backgroundImage {itemBox1.style.backgroundImage.ToString()}" ); 
+    //    Debug.Log($"itemBox1.style {itemBox1.style}" );
+    //    Debug.Log($"itemBox1. {itemBox1}" );
+    //}
+
+    //public void ItemWaitOn()
+    //{
+    //    _itemWait.AddToClassList("on");
+    //}
+    //public void ItemWaitOff()
+    //{
+    //    _itemWait.RemoveFromClassList("on");
+    //}
 }
 

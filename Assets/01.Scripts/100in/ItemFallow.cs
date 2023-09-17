@@ -29,18 +29,17 @@ public class ItemFallow : MonoBehaviour
     }
     public void SetPosition()
     {
-        Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(m_Bar.panel, Trm.position, m_MainCamera);
-        ////Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(m_Bar.panel, m_MainCamera.ScreenToWorldPoint(Input.mousePosition), m_MainCamera);
+        //Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(m_Bar.panel, Trm.position, m_MainCamera);
+        Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(m_Bar.panel, m_MainCamera.ScreenToWorldPoint(Input.mousePosition), m_MainCamera);
 
         m_Bar.transform.position = newPosition.WithNewX(newPosition.x - m_Bar.layout.width / 2);
     }
     private void LateUpdate()
     {
-        if(Trm is not null)
-        {
+        
             SetPosition();
             
-        }
+        
     }
 }
 

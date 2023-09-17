@@ -19,7 +19,7 @@ public class Item : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            _waitLounge.itemButtonImageSet(_weaponStatus.WeaponSprite);
+            //_waitLounge.itemButtonImageSet(_weaponStatus);
             Destroy(gameObject);
         }
     }
