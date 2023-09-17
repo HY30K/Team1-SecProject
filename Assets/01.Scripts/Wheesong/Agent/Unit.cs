@@ -2,55 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum State { IDLE = 0, CHASE = 1, ATTACK = 2, DIE = 3, NULL = 4}
-
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : Agent
 {
-    public State state;
-
     [Header("SOName")]
     [SerializeField] private string unitSOName;
 
-    public float speed;
-    public float attack;
-    public float attackDelay;
-    public float range;
-    public float attackRange;
-
-    protected Rigidbody2D rb;
-    protected SpriteRenderer sp;
-    protected Collider2D col;
-    protected Animator anim;
-    protected Living livingHp;
     protected Transform enemyTrs;
-
-    public bool isChangeState;
-
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        sp = GetComponent<SpriteRenderer>();
-        col = GetComponent<Collider2D>();
-        anim = GetComponent<Animator>();
-        livingHp = GetComponent<Living>();
-    }
-
-    private void OnEnable() // »ý¼º ½Ã
-    {
-        DataSetting();
-        col.enabled = true;
-        state = State.IDLE;
-    }
 
     private void Update()
     {
-        UnitBrain();
-
+        Brain();
+        sp.material.SetTexture("Sprite", sp.sprite.texture);
         if (enemyTrs != null)
             sp.flipX = enemyTrs.position.x - transform.position.x > 0 ? false : true;
     }
 
-    void DataSetting()
+    protected override void DataSetting()
     {
         AgentData unitData = Resources.Load<AgentData>($"UnitSO/{unitSOName}");
         livingHp.HpSetting(unitData.hp);
@@ -61,37 +28,7 @@ public abstract class Unit : MonoBehaviour
         attackRange = unitData.AttackRange;
     }
 
-    private void UnitBrain()
-    {
-        switch (state)
-        {
-            case State.IDLE:
-                ChangeState("Idle");
-                IdleNode();
-                break;
-            case State.CHASE:
-                ChangeState("Chase");
-                ChaseNode();
-                break;
-            case State.ATTACK:
-                ChangeState("Attack");
-                AttackNode();
-                break;
-            case State.DIE:
-                ChangeState("Die");
-                DieNode();
-                break;
-        }
-    }
-
-    void ChangeState(string triggerName)
-    {
-        if (!isChangeState) return;
-        isChangeState = false;
-        anim.SetTrigger(triggerName);
-    }
-
-    protected void IdleNode()
+    protected override void IdleNode()
     {
         Idle();
 
@@ -102,7 +39,7 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    protected void ChaseNode()
+    protected override void ChaseNode()
     {
         Chase();
 
@@ -120,7 +57,7 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    protected void AttackNode()
+    protected override void AttackNode()
     {
         Attack();
 
@@ -132,7 +69,7 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    protected void DieNode()
+    protected override void DieNode()
     {
         Die();
     }
@@ -171,10 +108,4 @@ public abstract class Unit : MonoBehaviour
     protected abstract void Chase();
     protected abstract void Attack();
     protected abstract void Die();
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, range);
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
 }

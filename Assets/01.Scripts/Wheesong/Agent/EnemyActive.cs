@@ -8,6 +8,8 @@ public class EnemyActive : Enemy
 {
     bool canAttack = true;
 
+    const float whiteFrame = 0.07f;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -38,6 +40,11 @@ public class EnemyActive : Enemy
         col.enabled = false;
     }
 
+    public void OnHit()
+    {
+        StartCoroutine(OnHitting());
+    }
+
     private void OnDisable()
     {
         canAttack = false;
@@ -46,11 +53,20 @@ public class EnemyActive : Enemy
 
     private IEnumerator AttackDelay()
     {
+        unitTrs.GetComponent<UnitActive>().OnHit();
         yield return new WaitForSeconds(attackDelay);
         if (unitTrs != null)
         {
             unitTrs.GetComponent<UnitHp>().OnHit(attack);
         }
+
         canAttack = true;
+    }
+
+    private IEnumerator OnHitting()
+    {
+        sp.material.SetFloat("WhiteFrame", 1);
+        yield return new WaitForSeconds(whiteFrame);
+        sp.material.SetFloat("WhiteFrame", 0);
     }
 }

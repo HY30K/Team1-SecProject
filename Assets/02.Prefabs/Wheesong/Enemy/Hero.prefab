@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 4723107735738678597, guid: 0bd97e23f8b532a4f8969605a3b00a4e, type: 3}
+    - target: {fileID: 109412131299881997, guid: 8d9fe91ec3be3f34bba239a4553d47b7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d6e5cd5b377ef574eb7f1b6a6ba695e2, type: 2}
     - target: {fileID: 1831735284810981234, guid: 8d9fe91ec3be3f34bba239a4553d47b7, type: 3}
       propertyPath: m_Name
       value: Hero

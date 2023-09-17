@@ -6,6 +6,14 @@ public class UnitActive : Unit
 {
     bool canAttack = true;
 
+    const float whiteFrame = 0.07f;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        canAttack = true;
+    }
+
     protected override void Idle()//가만히 있기
     {
         
@@ -30,6 +38,11 @@ public class UnitActive : Unit
         col.enabled = false;
     }
 
+    public void OnHit()
+    {
+        StartCoroutine(OnHitting());
+    }
+
     public void OnAggro(Transform enemy)
     {
         if (state != State.IDLE) return;
@@ -46,9 +59,18 @@ public class UnitActive : Unit
 
     private IEnumerator AttackDelay()
     {
+        enemyTrs.GetComponent<EnemyActive>().OnHit();
         yield return new WaitForSeconds(attackDelay);
         if(enemyTrs != null)
             enemyTrs.GetComponent<EnemyHP>().OnHit(attack);
+
         canAttack = true;
+    }
+
+    private IEnumerator OnHitting()
+    {
+        sp.material.SetFloat("WhiteFrame", 1);
+        yield return new WaitForSeconds(whiteFrame);
+        sp.material.SetFloat("WhiteFrame", 0);
     }
 }
