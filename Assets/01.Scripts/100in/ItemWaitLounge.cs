@@ -1,28 +1,28 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEditor;
 
 public class ItemWaitLounge : MonoBehaviour
 {
     private UIDocument _dot;
     private VisualElement _root;
-    [SerializeField] private UnityEvent<Sprite> _SetSprite;
     private Dictionary<string, VisualElement> _itemBox = new Dictionary<string, VisualElement>();
     Vector2 localMousePosition;
 
-    private string _nullImage = "NullSprit(UnityEngine.Sprite)";
+    private string _nullImage = "NullSprit (UnityEngine.Texture2D)";
     public Sprite _nullSprite;
     private VisualElement _itemWait;
     private static bool OnDrage;
 
-    #region _currentElementSet
+    private Camera _cam;
 
+    #region 딕셔너리
+    private Dictionary<string, StyleLength> TargetTop = new Dictionary<string, StyleLength>();
+    private Dictionary<string, StyleLength> TargetLeft = new Dictionary<string, StyleLength>();
+    private Dictionary<string, WeaponStatusSO> ItemSO = new Dictionary<string, WeaponStatusSO>();
+    #endregion
+
+    #region _currentElementSet
     private VisualElement _currentDrageElement;
     private StyleLength _currentTargetTop;
     private StyleLength _currentTargetLeft;
@@ -43,11 +43,22 @@ public class ItemWaitLounge : MonoBehaviour
             _itemBox[i.ToString()].RegisterCallback<MouseUpEvent>(DrageUp);
             _itemBox[i.ToString()].RegisterCallback<MouseMoveEvent>(DrageMove);
             _itemBox[i.ToString()].RegisterCallback<MouseOutEvent>(DrageOut);
+            _itemBox[i.ToString()].style.backgroundImage = _nullSprite.texture;
+            TargetTop.Add(_itemBox[i.ToString()].name, _itemBox[i.ToString()].style.top);
+            TargetLeft.Add(_itemBox[i.ToString()].name, _itemBox[i.ToString()].style.left);
+            ItemSO.Add(_itemBox[i.ToString()].name, null);
         }
-
+        Debug.Log(_itemBox[1.ToString()].style.backgroundImage.ToString());
         _itemWait = _dot.rootVisualElement.Q<VisualElement>("ItemWait");
+
+        _cam = Camera.main;
+
     }
 
+    /// <summary>
+    /// 마우스가 엘리멘트에서 벗어 났을 때
+    /// </summary>
+    /// <param name="evt"></param>
     private void DrageOut(MouseOutEvent evt)
     {
         if (isDragging)
@@ -56,18 +67,22 @@ public class ItemWaitLounge : MonoBehaviour
         }
     }
 
-  
+    /// <summary>
+    /// 마우스가 엘리멘트 안에서 움직일때
+    /// </summary>
+    /// <param name="evt"></param>
     private void DrageMove(MouseMoveEvent evt)
     {
         //a = evt;
         if (isDragging)
         {
+            var a = evt.target as VisualElement;
             // 올바른 UI 요소에서 이벤트가 발생하는지 확인
-            if (_currentDrageElement != null)
+            if (_currentDrageElement != null && a.name == _currentDrageElement.name)
             {
                 //Debug.Log(evt.localMousePosition);
-      
-                
+
+
                 localMousePosition = _currentDrageElement.ChangeCoordinatesTo(_currentDrageElement.parent, evt.localMousePosition);
 
             }
@@ -75,29 +90,55 @@ public class ItemWaitLounge : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// 마우스에서 클릭 떗을떄
+    /// </summary>
+    /// <param name="evt"></param>
     private void DrageUp(MouseUpEvent evt)
     {
-        _currentDrageElement.style.top = _currentTargetTop;
-        _currentDrageElement.style.left = _currentTargetLeft;
+        _currentDrageElement.style.top = TargetTop[_currentDrageElement.name];
+        _currentDrageElement.style.left = TargetLeft[_currentDrageElement.name];
+
+
+        RaycastHit2D hit = Physics2D.Raycast(MouseDirSet(), Vector2.zero);
+        if ((hit.collider != null && hit.collider.TryGetComponent<UnitItemSlot>(out UnitItemSlot unitItemSlot))&&_currentDrageElement.style.backgroundImage.ToString() != _nullImage)
+        {
+            if (unitItemSlot.Check())
+            {
+                unitItemSlot.AddItem(ItemSO[_currentDrageElement.name]);
+                _currentDrageElement.style.backgroundImage = _nullSprite.texture;
+            }
+      
+
+        }
 
         isDragging = false;
-        if (isDragging)
-        {
-            OnDrage = false;
-            if (_currentDrageElement != null)
-            {
-                //_currentDrageElement.style.top = _currentTargetTop;
-                //Debug.Log(_currentTargetTop);
-                //_currentDrageElement.style.left = _currentTargetLeft;
-                //Debug.Log(_currentTargetLeft);
+        OnDrage = false;
+        //if (isDragging)
+        //{
+        //    OnDrage = false;
+        //    if (_currentDrageElement != null)
+        //    {
+        //        //_currentDrageElement.style.top = _currentTargetTop;
+        //        //Debug.Log(_currentTargetTop);
+        //        //_currentDrageElement.style.left = _currentTargetLeft;
+        //        //Debug.Log(_currentTargetLeft);
 
-                _currentDrageElement.RemoveFromHierarchy();
-                _currentDrageElement = null;
-            }
-        }
+        //        _currentDrageElement.RemoveFromHierarchy();
+        //        _currentDrageElement = null;
+        //    }
+        //}
     }
 
+    private Vector2 MouseDirSet()
+    {
+        return _cam.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    /// <summary>
+    /// 마우스를 엘리멘트에 대고 눌렀을떄
+    /// </summary>
+    /// <param name="evt"></param>
     private void DrageDown(MouseDownEvent evt)
     {
         isDragging = true;
@@ -110,6 +151,10 @@ public class ItemWaitLounge : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            _itemWait.ToggleInClassList("on");
+        }
 
         if (isDragging)
         {
@@ -118,6 +163,26 @@ public class ItemWaitLounge : MonoBehaviour
             _currentDrageElement.style.top = localMousePosition.y - (_currentDrageElement.resolvedStyle.height / 2);
         }
     }
+
+    /// <summary>
+    /// 아이템을 먹으면 발*동
+    /// </summary>
+    /// <param name="weaponStatusSO"></param>
+    public void TakeItem(WeaponStatusSO weaponStatusSO)
+    {
+        for (int i = 1; i < _itemBox.Count+1; i++)
+        {
+            if (_itemBox[i.ToString()].style.backgroundImage.ToString() == _nullImage)
+            {
+                ItemSO[i.ToString()] = weaponStatusSO;
+                _itemBox[i.ToString()].style.backgroundImage = ItemSO[i.ToString()].WeaponSprite.texture;
+                break;
+            }
+        }
+    }
+
+   
+
     //public void itemButtonImageSet( WeaponStatusSO weaponStatusDO)
     //{
     //    if (itemBox1.style.backgroundImage.ToString() == _nullImage)

@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 [CreateAssetMenu(menuName = "SO/WeaponStatusSO")]
 public class WeaponStatusSO : ScriptableObject
 {
-    public string qwer = Guid.NewGuid().ToString();
     [SerializeField] private string _weaponName; public string WeaponName { get { return _weaponName; } }
     [SerializeField] private Sprite _weaponSprite; public Sprite WeaponSprite { get { return _weaponSprite; } }
     [SerializeField] private int _keyValue; public int keyValue { get { return _keyValue; } }
