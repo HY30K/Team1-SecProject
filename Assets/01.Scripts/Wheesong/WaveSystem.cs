@@ -63,7 +63,7 @@ public class WaveSystem : MonoBehaviour
 
     public void NextWave()
     {
-        if (isWaving) return;
+        if (isWaving || unitParent.childCount <= 0) return;
 
         isWaving = isSpawning = true;
         waveUnitCnt = unitParent.childCount;
@@ -179,7 +179,8 @@ public class WaveSystem : MonoBehaviour
             spawnDatas[nowWave].enemyTuples[randomIndex].cnt--;
             if (spawnDatas[nowWave].enemyTuples[randomIndex].cnt <= 0)
             {
-                randomEnemy.Remove(spawnDatas[nowWave].enemyTuples[randomIndex].obj);
+                randomEnemy.RemoveAt(randomIndex);
+                Debug.Log(randomEnemy.Count);
             }
 
             yield return new WaitForSeconds(spawnTime);

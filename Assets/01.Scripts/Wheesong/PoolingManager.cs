@@ -43,7 +43,7 @@ public class PoolingManager : MonoBehaviour
         if (poolTransform.childCount > 0)
         {
             poolObj = poolTransform.GetChild(0).gameObject;
-            poolObj.SetActive(true);
+            SetActiveRecursively(poolObj);
             poolObj.transform.SetParent(null);
         }
         else
@@ -56,5 +56,15 @@ public class PoolingManager : MonoBehaviour
         poolObj.transform.SetParent(trs);
 
         return poolObj;
+    }
+
+    private void SetActiveRecursively(GameObject obj)
+    {
+        obj.SetActive(true);
+
+        foreach (Transform child in obj.transform)
+        {
+            SetActiveRecursively(child.gameObject);
+        }
     }
 }

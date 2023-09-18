@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BatchManager : MonoBehaviour
 {
+    [SerializeField] private Transform unitParent;
     [SerializeField] private GameObject[] units;
     [SerializeField] private GameObject[] unitAlphas;
     private Dictionary<string, GameObject> unitsDictionary = new Dictionary<string, GameObject>();
@@ -30,12 +31,12 @@ public class BatchManager : MonoBehaviour
 
     public void UnitCreate(Vector2 batchPos, string unitAlphaName)
     {
-        currentUnitAlpha = Instantiate(unitAlphasDictionary[unitAlphaName], batchPos, quaternion.identity);
+        currentUnitAlpha = PoolingManager.Instance.Pop(unitAlphasDictionary[unitAlphaName].name, batchPos);
     }
 
     public void UnitDestroy()
     {
-        Destroy(currentUnitAlpha);
+        PoolingManager.Instance.Push(currentUnitAlpha);
     }
 
     public void UnitAlphaBatch(Vector2 batchPos)
@@ -48,11 +49,9 @@ public class BatchManager : MonoBehaviour
         if (BatchCheck.batchble && BatchTile.Instance.IsBatchAble(batchPos))
         {
             currentUnitAlpha.transform.Find("BatchArea").gameObject.SetActive(false);
-            Instantiate(unitsDictionary[unitName], BatchTile.Instance.Vector2IntPos(batchPos), quaternion.identity);
-            Destroy(currentUnitAlpha);
+            PoolingManager.Instance.Pop(unitsDictionary[unitName].name, BatchTile.Instance.Vector2IntPos(batchPos), unitParent);
         }
-        else
-            Destroy(currentUnitAlpha);
-        }
+        PoolingManager.Instance.Push(currentUnitAlpha);
+    }
 }
 

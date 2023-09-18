@@ -21,7 +21,7 @@ public class UnitActive : Unit
 
     protected override void Chase()//Àû ÂÑ±â
     {
-        Vector2 dir = enemyTrs.position - transform.position;
+        Vector2 dir = (enemyTrs.position - transform.position).normalized;
         rb.velocity = dir * speed;
     }
     

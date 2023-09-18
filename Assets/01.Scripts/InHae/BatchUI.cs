@@ -14,6 +14,8 @@ public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDow
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (WaveSystem.Instance.isWaving) return;
+
         Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
         BatchManager.Instance.UnitBatch(mousePos, currentUnitName);
     }
@@ -26,6 +28,8 @@ public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDow
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (WaveSystem.Instance.isWaving) return;
+
         currentUnitName = eventData.pointerCurrentRaycast.gameObject.name;
         Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
         BatchManager.Instance.UnitCreate(mousePos, currentUnitName+"Alpha");
