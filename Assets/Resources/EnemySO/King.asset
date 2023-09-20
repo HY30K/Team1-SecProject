@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9faff768f5abed46b33ae5bec6009e0, type: 3}
   m_Name: King
   m_EditorClassIdentifier: 
+  cost: 20
   hp: 11
   attack: 0.8
   speed: 1.4

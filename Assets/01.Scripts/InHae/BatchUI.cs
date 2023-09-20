@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Scripting;
 using UnityEngine.UI;
 
 public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     private string currentUnitName;
     private Camera mainCam;
+    private RaycastHit2D hit;
 
     private void Awake()
     {

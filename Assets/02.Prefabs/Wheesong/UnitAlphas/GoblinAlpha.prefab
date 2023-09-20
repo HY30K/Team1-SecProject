@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 898807211416289562}
   - component: {fileID: 3266805458644339306}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GoblinAlpha
   m_TagString: Untagged
   m_Icon: {fileID: 0}

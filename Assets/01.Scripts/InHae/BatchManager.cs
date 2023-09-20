@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BatchManager : MonoBehaviour
@@ -12,13 +13,10 @@ public class BatchManager : MonoBehaviour
     [SerializeField] private GameObject[] units;
     [SerializeField] private GameObject[] unitAlphas;
     [SerializeField] private GameObject[] unitImage;
-    [SerializeField] private int[] unitsCost;
 
     private Dictionary<string, GameObject> unitsDictionary = new Dictionary<string, GameObject>();
     private Dictionary<string, GameObject> unitAlphasDictionary = new Dictionary<string, GameObject>();
-    private Dictionary<string, int> unitCostDictionary = new Dictionary<string, int>();
     private GameObject currentUnitAlpha;
-    List<TextMeshProUGUI> costText = new List<TextMeshProUGUI>();
 
     static public BatchManager Instance;
 
@@ -27,16 +25,13 @@ public class BatchManager : MonoBehaviour
         if(Instance != null) Destroy(gameObject);
         Instance = this;
     }
-
+    
     private void Start()
     {
         for (int i = 0; i < units.Length; i++)
         {
             unitsDictionary.Add(units[i].name, units[i]);
             unitAlphasDictionary.Add(unitAlphas[i].name, unitAlphas[i]);
-            unitCostDictionary.Add(unitImage[i].name, unitsCost[i]);
-            costText.Add(unitImage[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>());
-            costText[i].text = unitsCost[i].ToString();
         }
     }
 
@@ -57,10 +52,12 @@ public class BatchManager : MonoBehaviour
 
     public void UnitBatch(Vector2 batchPos, string unitName)
     {
-        int cost = unitCostDictionary[unitName];
+        int cost = MoneyManager.Instance.UnitCost(unitName);
+
         if (WaveSystem.Instance.isWaving
             || !MoneyManager.Instance.EnoughMoney(cost)) return;
-        MoneyManager.Instance.ChangeMoney(-cost);
+
+        MoneyManager.Instance.UpdateMoney(-cost);
 
         if (BatchCheck.batchble && BatchTile.Instance.IsBatchAble(batchPos))
         {
@@ -68,17 +65,6 @@ public class BatchManager : MonoBehaviour
             PoolingManager.Instance.Pop(unitsDictionary[unitName].name, BatchTile.Instance.Vector2IntPos(batchPos), unitParent);
         }
         PoolingManager.Instance.Push(currentUnitAlpha);
-    }
-
-    public void UnitCostUpgrade(string unitImageName, int value)
-    {
-        int index = Array.IndexOf(unitCostDictionary.Keys.ToArray(), unitImageName);
-        unitsCost[index] += value;
-
-        for (int i = 0; i < unitsCost.Length; i++)
-        {
-            costText[i].text = unitsCost[i].ToString();
-        }
     }
 }
 

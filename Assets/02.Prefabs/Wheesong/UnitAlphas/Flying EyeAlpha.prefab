@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7696209646753439248}
   - component: {fileID: 4371038338908661129}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Flying EyeAlpha
   m_TagString: Untagged
   m_Icon: {fileID: 0}

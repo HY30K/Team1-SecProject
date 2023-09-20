@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4531486296177930777}
   - component: {fileID: 8391117240459238263}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: EVil WizardAlpha
   m_TagString: Untagged
   m_Icon: {fileID: 0}

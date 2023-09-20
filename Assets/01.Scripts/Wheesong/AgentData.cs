@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/Unit/AgentData")]
 public class AgentData : ScriptableObject
 {
+    public int cost;
     public float hp;
     public float attack;
     [SerializeField] private float speed;
