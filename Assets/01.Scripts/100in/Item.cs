@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [Header("무기 SO를 넣어주십시오")]
     [SerializeField] WeaponStatusSO _weaponStatus;
 
     private SpriteRenderer _spriteRenderer;
@@ -24,7 +25,7 @@ public class Item : MonoBehaviour
         }
         else if (collision.CompareTag("Player"))
         {
-            Debug.Log("아이템창 꽉찼어 이년아");
+            Debug.Log("아이템창 꽉찼음");
         }
     }
 }
