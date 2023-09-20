@@ -17,10 +17,14 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")&&_waitLounge.TakeItemChake())
         {
             _waitLounge.TakeItem(_weaponStatus);
             Destroy(gameObject);
+        }
+        else if (collision.CompareTag("Player"))
+        {
+            Debug.Log("æ∆¿Ã≈€√¢ ≤À√°æÓ ¿Ã≥‚æ∆");
         }
     }
 }

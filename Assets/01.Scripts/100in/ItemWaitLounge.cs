@@ -168,7 +168,7 @@ public class ItemWaitLounge : MonoBehaviour
     /// 아이템을 먹으면 발*동
     /// </summary>
     /// <param name="weaponStatusSO"></param>
-    public void TakeItem(WeaponStatusSO weaponStatusSO)
+    public bool TakeItem(WeaponStatusSO weaponStatusSO)
     {
         for (int i = 1; i < _itemBox.Count+1; i++)
         {
@@ -176,9 +176,22 @@ public class ItemWaitLounge : MonoBehaviour
             {
                 ItemSO[i.ToString()] = weaponStatusSO;
                 _itemBox[i.ToString()].style.backgroundImage = ItemSO[i.ToString()].WeaponSprite.texture;
-                break;
+                return true;
             }
         }
+        return false;
+    }
+
+    public bool TakeItemChake()
+    {
+        for (int i = 1; i < _itemBox.Count+1; i++)
+        {
+            if (_itemBox[i.ToString()].style.backgroundImage.ToString() == _nullImage)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
    
