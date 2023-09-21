@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -54,6 +55,9 @@ public class Living : MonoBehaviour
             DieAction?.Invoke();
         }
     }
+
+    public virtual void OnHeel(float heel)
+        => hp += heel;
 
     public virtual void Die()
     {
