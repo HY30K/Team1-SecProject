@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
+    [SerializeField] private Image unitPanel;
     private string currentUnitName;
     private Camera mainCam;
     private RaycastHit2D hit;
@@ -24,6 +25,7 @@ public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDow
     
     public void OnDrag(PointerEventData eventData)
     {
+        unitPanel.color = new Color(1, 1, 1, 0.4f);
         Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
         BatchManager.Instance.UnitAlphaBatch(mousePos);
     }
@@ -38,6 +40,7 @@ public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDow
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        unitPanel.color = Color.white;
         BatchManager.Instance.UnitDestroy();
     }
 }
