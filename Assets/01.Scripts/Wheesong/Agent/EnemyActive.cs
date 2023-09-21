@@ -23,7 +23,7 @@ public class EnemyActive : Enemy
 
     protected override void Chase()
     {
-        Vector2 dir = unitTrs.position - transform.position;
+        Vector2 dir = (unitTrs.position - transform.position).normalized;
         rb.velocity = dir * speed;
     }
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2293178259884019863}
   - component: {fileID: 8488125785996277496}
   - component: {fileID: 1817618847103580800}
+  - component: {fileID: -1344330958409474230}
   - component: {fileID: -8057606959055230722}
   m_Layer: 6
   m_Name: TestEnemy
@@ -164,8 +165,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  enemySOName: TestEnemy
+  speed: 0
+  attack: 0
+  attackDelay: 0
+  range: 0
+  attackRange: 0
   isChangeState: 0
+  enemySOName: TestEnemy
 --- !u!114 &1817618847103580800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,8 +184,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7afecda4035234ab944838b04428fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpBarPrefab: {fileID: 1066664753743900291, guid: f3d66360e9c1f494c9989047a1272211, type: 3}
+  DieAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1817618847103580800}
+        m_TargetAssemblyTypeName: EnemyHP, Assembly-CSharp
+        m_MethodName: Die
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -1344330958409474230}
+        m_TargetAssemblyTypeName: EnemyCost, Assembly-CSharp
+        m_MethodName: PlusCost
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hpBarPrefab: {fileID: 1066664753743900291, guid: 75633f66c9ee9304785fb9626d3236d2, type: 3}
+  hpbarPosX: 1
   isDie: 0
+--- !u!114 &-1344330958409474230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831735284810981234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeefb68b3519464fb7191753855f692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &-8057606959055230722
 Animator:
   serializedVersion: 5

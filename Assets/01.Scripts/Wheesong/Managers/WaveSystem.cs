@@ -46,6 +46,7 @@ public class WaveSystem : MonoBehaviour
     private int waveUnitCnt;
     private bool isSpawning;
 
+    const float costUpgradeGrape = 1.2f;
     const float hpUpgradeGrape = 1.15f;
     const float attackUpgradeGrape = 1.1f;
 
@@ -63,7 +64,7 @@ public class WaveSystem : MonoBehaviour
 
     public void NextWave()
     {
-        if (isWaving) return;
+        if (isWaving || unitParent.childCount <= 0) return;
 
         isWaving = isSpawning = true;
         waveUnitCnt = unitParent.childCount;
@@ -74,7 +75,7 @@ public class WaveSystem : MonoBehaviour
         });
 
         nextBtn.transform.DOMoveX(2200, 1f).SetEase(Ease.OutCubic).OnComplete(() =>{
-            EnemyDataUpgrade();
+            MoneyManager.Instance.UpdateEnemysCost(costUpgradeGrape);
             StartCoroutine(ParallelSpawnEnemy());
         });
     }
@@ -85,6 +86,7 @@ public class WaveSystem : MonoBehaviour
         {
             enemyData.hp *= hpUpgradeGrape;
             enemyData.attack *= attackUpgradeGrape;
+
         }
     }
 
@@ -144,10 +146,17 @@ public class WaveSystem : MonoBehaviour
 
     private IEnumerator SequentiallySpawnEnemy() //위에있는 순부터 차례대로 생성
     {
-        for (int i = 0; i < spawnDatas[nowWave].enemyTuples.Count; i++)
+        int wave = nowWave;
+        if (nowWave >= spawnDatas.Count)//최대 생성
         {
-            string popName = spawnDatas[nowWave].enemyTuples[i].obj.name;
-            for (int j = 0; j < spawnDatas[nowWave].enemyTuples[i].cnt; j++)
+            wave = spawnDatas.Count - 1;
+            EnemyDataUpgrade();
+        }
+
+        for (int i = 0; i < spawnDatas[wave].enemyTuples.Count; i++)
+        {
+            string popName = spawnDatas[wave].enemyTuples[i].obj.name;
+            for (int j = 0; j < spawnDatas[wave].enemyTuples[i].cnt; j++)
             {
                 waveEnemyCnt++;
 
@@ -163,23 +172,30 @@ public class WaveSystem : MonoBehaviour
 
     private IEnumerator ParallelSpawnEnemy() //모든 몬스터가 랜덤순으로 생성
     {
+        int wave = nowWave;
+        if (nowWave >= spawnDatas.Count)//최대 생성
+        {
+            wave = spawnDatas.Count - 1;
+            EnemyDataUpgrade();
+        }
+
         List<GameObject> randomEnemy = new List<GameObject>();
-        for (int i = 0; i < spawnDatas[nowWave].enemyTuples.Count; i++)
-            randomEnemy.Add(spawnDatas[nowWave].enemyTuples[i].obj);
+        for (int i = 0; i < spawnDatas[wave].enemyTuples.Count; i++)
+            randomEnemy.Add(spawnDatas[wave].enemyTuples[i].obj);
 
         while (randomEnemy.Count > 0)
         {
             waveEnemyCnt++;
 
             int randomIndex = UnityEngine.Random.Range(0, randomEnemy.Count);
-            string popName = spawnDatas[nowWave].enemyTuples[randomIndex].obj.name;
+            string popName = spawnDatas[wave].enemyTuples[randomIndex].obj.name;
             Vector2 spawnPos = spawnTrs[UnityEngine.Random.Range(0, spawnDatas.Count)].position;
             PoolingManager.Instance.Pop(popName, spawnPos);
 
-            spawnDatas[nowWave].enemyTuples[randomIndex].cnt--;
-            if (spawnDatas[nowWave].enemyTuples[randomIndex].cnt <= 0)
+            spawnDatas[wave].enemyTuples[randomIndex].cnt--;
+            if (spawnDatas[wave].enemyTuples[randomIndex].cnt <= 0)
             {
-                randomEnemy.Remove(spawnDatas[nowWave].enemyTuples[randomIndex].obj);
+                randomEnemy.RemoveAt(randomIndex);
             }
 
             yield return new WaitForSeconds(spawnTime);

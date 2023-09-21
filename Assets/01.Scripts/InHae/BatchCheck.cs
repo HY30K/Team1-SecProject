@@ -13,12 +13,13 @@ public class BatchCheck : MonoBehaviour
     
     private void Update()
     {
-        if (!BatchTile.Instance.IsBatchAble(transform.position))
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, 0f, LayerMask.GetMask("Unit"));
+        if (!BatchTile.Instance.IsBatchAble(transform.position) || hit.collider != null)//ª°∞≠
         {
             batchAreaRenderer.color = new Color(0.5f, 0f,0);
             batchble = false;
         }
-        else
+        else//√ ∑œ
         {
             batchAreaRenderer.color = new Color(0f, 0.5f,0);
             batchble = true;
@@ -28,7 +29,6 @@ public class BatchCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.tag);
         if (other.CompareTag("Unit"))
         {
             batchble = false;

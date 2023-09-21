@@ -3,18 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Living : MonoBehaviour
 {
+    [SerializeField] protected UnityEvent DieAction;
+
     [Header("HpBar")]
     [SerializeField] private Transform hpBarPrefab;
+    [SerializeField] float hpbarPosX = 1f;
+
     private GameObject hpBar;
     private Transform sliderValue;
+    private Rigidbody2D rb;
 
-    const float hpbarPosX = 1f;
     protected float hp;
     protected float maxHp;
     public bool isDie;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     protected virtual void OnEnable()
     {
@@ -41,12 +51,13 @@ public class Living : MonoBehaviour
         if (hp <= 0 && !isDie)
         {
             isDie = true;
-            Die();
+            DieAction?.Invoke();
         }
     }
 
     public virtual void Die()
     {
+        rb.velocity = Vector2.zero;
         PoolingManager.Instance.Push(hpBar);
     }
 }
