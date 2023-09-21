@@ -29,7 +29,6 @@ public class BatchCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.tag);
         if (other.CompareTag("Unit"))
         {
             batchble = false;

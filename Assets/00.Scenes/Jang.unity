@@ -2785,6 +2785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d08d81b6b8bb2438f94d2ef9371eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startMoney: 200
   moneyText: {fileID: 387927968}
   unitCase: {fileID: 592532451}
 --- !u!4 &660994036

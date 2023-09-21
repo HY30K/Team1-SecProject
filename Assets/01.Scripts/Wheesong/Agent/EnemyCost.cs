@@ -6,8 +6,9 @@ public class EnemyCost : MonoBehaviour
 {
     public int enemyCost { get; private set; }
 
-    public void OnEnable()
+    public void Start()
     {
+        Debug.Log(gameObject.name);
         enemyCost = MoneyManager.Instance.EnemyCost(gameObject.name);
     }
 

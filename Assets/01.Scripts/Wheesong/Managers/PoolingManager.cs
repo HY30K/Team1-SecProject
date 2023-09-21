@@ -39,7 +39,7 @@ public class PoolingManager : MonoBehaviour
 
         Transform poolTransform = transform.GetChild(pools[name]);
         GameObject poolObj;
-
+        
         if (poolTransform.childCount > 0)
         {
             poolObj = poolTransform.GetChild(0).gameObject;

@@ -12,6 +12,7 @@ public class MoneyManager : MonoBehaviour
 
     public int money { get; private set; }
 
+    [SerializeField] private int startMoney;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private Transform unitCase;
 
@@ -22,6 +23,7 @@ public class MoneyManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        money = startMoney;
     }
 
     private void Start()
@@ -31,19 +33,20 @@ public class MoneyManager : MonoBehaviour
         {
             unitCostText.Add(unitCase.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>());
         }
+        moneyText.text = $"Money : {money}";
 
         //유닛/적 코스트 초기화
         AgentData[] units = Resources.LoadAll<AgentData>("UnitSO");
-        AgentData[] enemys = Resources.LoadAll<AgentData>("EnemyS0");
+        AgentData[] enemys = Resources.LoadAll<AgentData>("EnemySO");
 
         for (int i = 0; i < units.Length; i++)
-        {
-            Debug.Log(units[i].name);
+        {Debug.Log(units[i].name);
             unitCostDictionary.Add(units[i].name, ( units[i].cost, i));
             unitCostText[i].text = units[i].cost.ToString();
         }
         for (int i = 0; i < enemys.Length; i++)
         {
+            Debug.Log(enemys[i].name);
             enemyCostDictionary.Add(enemys[i].name, enemys[i].cost);
         }
     }
@@ -66,12 +69,12 @@ public class MoneyManager : MonoBehaviour
 
     public int UnitCost(string unitName)
     {
-        Debug.Log(unitName);
         return unitCostDictionary[unitName].Item1;
     }
 
     public int EnemyCost(string enemyName)
     {
+        Debug.Log(enemyName);
         return enemyCostDictionary[enemyName];
     }
 
