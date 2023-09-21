@@ -30,6 +30,7 @@ public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDow
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("log");
         currentUnitName = eventData.pointerCurrentRaycast.gameObject.name;
         Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
         BatchManager.Instance.UnitCreate(mousePos, currentUnitName+"Alpha");

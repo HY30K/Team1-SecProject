@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = _weaponStatus.WeaponSprite;
-        _waitLounge = GameObject.Find("ItemWait").GetComponent<ItemWaitLounge>();
+        _waitLounge = GameObject.Find("ItemManager").GetComponent<ItemWaitLounge>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
