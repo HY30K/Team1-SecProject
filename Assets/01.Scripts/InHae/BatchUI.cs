@@ -20,7 +20,6 @@ public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDow
     public void OnEndDrag(PointerEventData eventData)
     {
         Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
-        Debug.Log(currentUnitName);
         BatchManager.Instance.UnitBatch(mousePos, currentUnitName);
     }
     

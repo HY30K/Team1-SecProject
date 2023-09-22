@@ -40,13 +40,12 @@ public class MoneyManager : MonoBehaviour
         AgentData[] enemys = Resources.LoadAll<AgentData>("EnemySO");
 
         for (int i = 0; i < units.Length; i++)
-        {Debug.Log(units[i].name);
+        {
             unitCostDictionary.Add(units[i].name, ( units[i].cost, i));
             unitCostText[i].text = units[i].cost.ToString();
         }
         for (int i = 0; i < enemys.Length; i++)
         {
-            Debug.Log(enemys[i].name);
             enemyCostDictionary.Add(enemys[i].name, enemys[i].cost);
         }
     }

@@ -57,7 +57,15 @@ public class Living : MonoBehaviour
     }
 
     public virtual void OnHeel(float heel)
-        => hp += heel;
+    {
+        if (hp + heel > maxHp)
+        {
+            maxHp = hp + heel;
+            hp = maxHp;
+        }
+        else
+            hp += heel;
+    }
 
     public virtual void Die()
     {

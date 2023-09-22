@@ -27,6 +27,7 @@ public class StateUI : MonoBehaviour
                 .sprite = unit.Sprite;
             unitBtn[i].onClick.AddListener(() => OnState(unit));
         }
+        unitBtn[0].onClick?.Invoke();
     }
 
     private void OnState(AgentData agentData)

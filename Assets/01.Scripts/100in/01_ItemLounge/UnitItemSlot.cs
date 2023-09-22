@@ -17,7 +17,6 @@ public class UnitItemSlot : MonoBehaviour
         for (int i = 0; i < _maxSlot ; i++)
         {
             _itemSlot.Add(transform.GetChild(0).GetChild(i).GetComponent<SpriteRenderer>());
-            Debug.Log(_itemSlot[i]);
         }
     }
  

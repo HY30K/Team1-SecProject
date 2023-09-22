@@ -4,10 +4,13 @@ using UnityEngine;
 using DG.Tweening;
 public class PlayerMove : MonoBehaviour
 {
-    Rigidbody2D _rig2D;
     [SerializeField] private WeaponStatusSO qwer;
+    [SerializeField] private float moveSec;
     private Camera _cam;
+    private Rigidbody2D _rig2D;
+
     Vector3 _dir = Vector3.zero;
+
     private void Awake()
     {
         _cam = Camera.main;
@@ -19,7 +22,8 @@ public class PlayerMove : MonoBehaviour
         {
             _dir = _cam.ScreenToWorldPoint(Input.mousePosition);
             _dir.z = 0;
-            transform.DOMove(_dir, 3);
+            DOTween.Kill(gameObject);
+            transform.DOMove(_dir, moveSec);
         }
         
         //float x = Input.GetAxisRaw("Horizontal");
