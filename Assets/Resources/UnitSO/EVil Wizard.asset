@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9faff768f5abed46b33ae5bec6009e0, type: 3}
   m_Name: EVil Wizard
   m_EditorClassIdentifier: 
+  sprite: {fileID: -7500690451134026123, guid: d8958855ae433194aae8dc9ee0b23e89, type: 3}
   cost: 20
   hp: 14
   attack: 0.22

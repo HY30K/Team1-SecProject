@@ -37,7 +37,8 @@ public class BatchManager : MonoBehaviour
 
     public void UnitCreate(Vector2 batchPos, string unitAlphaName)
     {
-        currentUnitAlpha = PoolingManager.Instance.Pop(unitAlphasDictionary[unitAlphaName].name, batchPos);
+        string alphaName = unitAlphaName.Replace("_Image", ""); 
+        currentUnitAlpha = PoolingManager.Instance.Pop(unitAlphasDictionary[alphaName].name, batchPos);
     }
 
     public void UnitDestroy()
