@@ -12,7 +12,7 @@ public class BatchManager : MonoBehaviour
     [SerializeField] private Transform unitParent;
     [SerializeField] private GameObject[] units;
     [SerializeField] private GameObject[] unitAlphas;
-    [SerializeField] private GameObject[] unitImage;
+    //[SerializeField] private GameObject[] unitImage;
 
     private Dictionary<string, GameObject> unitsDictionary = new Dictionary<string, GameObject>();
     private Dictionary<string, GameObject> unitAlphasDictionary = new Dictionary<string, GameObject>();

@@ -38,7 +38,6 @@ public class StateUI : MonoBehaviour
             $"HP : {agentData.hp} \n" +
             $"SP : {agentData.Speed} \n" +
             $"ATK : {agentData.attack} \n" +
-            $"ATK_SP : {Mathf.Floor((atkSp_value / agentData.AttackDelay) * 100f)} \n" +
-            $"RAN : {agentData.Range} \n";
+            $"ATK_SP : {Mathf.Floor((atkSp_value / agentData.AttackDelay) * 100f)}";
     }
 }
