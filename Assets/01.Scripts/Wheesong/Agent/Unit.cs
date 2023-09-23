@@ -7,6 +7,8 @@ public abstract class Unit : Agent
     [Header("SOName")]
     [SerializeField] private string unitSOName;
 
+    public int level;
+
     protected Transform enemyTrs;
 
     private void Update()
@@ -19,8 +21,9 @@ public abstract class Unit : Agent
 
     protected override void DataSetting()
     {
-        AgentData unitData = Resources.Load<AgentData>($"UnitSO/{unitSOName}");
+        AgentData unitData = AgentDictionary.Instance.unitDatas[unitSOName];
         livingHp.HpSetting(unitData.hp);
+        level = unitData.level;
         speed = unitData.Speed;
         attack = unitData.attack;
         attackDelay = unitData.AttackDelay;

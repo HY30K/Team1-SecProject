@@ -14,7 +14,7 @@ public class Living : MonoBehaviour
     [SerializeField] private Transform hpBarPrefab;
     [SerializeField] float hpbarPosX = 1f;
 
-    private GameObject hpBar;
+    protected GameObject hpBar;
     private Transform sliderValue;
     private Rigidbody2D rb;
 
@@ -22,7 +22,7 @@ public class Living : MonoBehaviour
     protected float maxHp;
     public bool isDie;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }

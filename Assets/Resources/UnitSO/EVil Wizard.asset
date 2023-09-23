@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -7500690451134026123, guid: d8958855ae433194aae8dc9ee0b23e89, type: 3}
   cost: 20
+  level: 1
   hp: 14
   attack: 0.22
   speed: 1.2

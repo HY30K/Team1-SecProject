@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class AgentData : ScriptableObject
     [SerializeField] private Sprite sprite;
 
     public int cost;
+    public int level;
     public float hp;
     public float attack;
     [SerializeField] private float speed;

@@ -62,7 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5662888050205365683, guid: ef308a467ee82674eb9ab52681aeb294, type: 3}
       propertyPath: hpbarPosX
-      value: 0.6
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809490289312376886, guid: ef308a467ee82674eb9ab52681aeb294, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 7976257351963380412, guid: ef308a467ee82674eb9ab52681aeb294, type: 3}
       propertyPath: m_Sprite

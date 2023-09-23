@@ -19,13 +19,8 @@ public class SpawnData
     public List<EnemyTuple<GameObject, int>> enemyTuples;
 }
 
-public class WaveSystem : MonoBehaviour
+public class WaveSystem : MonoSingleton<WaveSystem>
 {
-    private static WaveSystem instance;
-    public static WaveSystem Instance { get { return instance; } }
-
-    public Dictionary<string, AgentData> enemyDatas = new Dictionary<string, AgentData>();
-
     [Header("Spawn")]
     [SerializeField] private List<SpawnData> spawnDatas = new List<SpawnData>();
     [SerializeField] private Transform[] spawnTrs;
@@ -52,13 +47,6 @@ public class WaveSystem : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null) instance = this;
-
-        foreach (AgentData enemyData in Resources.LoadAll<AgentData>("EnemySO"))
-        {
-            enemyDatas.Add(enemyData.name, Instantiate(enemyData));
-        }
-
         nextBtn.onClick.AddListener(NextWave);
     }
 
@@ -82,11 +70,10 @@ public class WaveSystem : MonoBehaviour
 
     private void EnemyDataUpgrade()
     {
-        foreach (AgentData enemyData in enemyDatas.Values)
+        foreach (AgentData enemyData in AgentDictionary.Instance.enemyDatas.Values)
         {
             enemyData.hp *= hpUpgradeGrape;
             enemyData.attack *= attackUpgradeGrape;
-
         }
     }
 
@@ -173,7 +160,7 @@ public class WaveSystem : MonoBehaviour
     private IEnumerator ParallelSpawnEnemy() //모든 몬스터가 랜덤순으로 생성
     {
         int wave = nowWave;
-        if (nowWave >= spawnDatas.Count)//최대 생성
+        if (nowWave >= spawnDatas.Count)//최대 생성, 이젠 몬스터 능력치를 강화시킨다.
         {
             wave = spawnDatas.Count - 1;
             EnemyDataUpgrade();

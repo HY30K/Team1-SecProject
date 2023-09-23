@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using static UnityEngine.Rendering.DebugUI;
 
 public class MoneyManager : MonoBehaviour
 {
@@ -17,17 +19,19 @@ public class MoneyManager : MonoBehaviour
     [SerializeField] private Transform unitCase;
 
     private Dictionary<string, ValueTuple<int, int>> unitCostDictionary = new Dictionary<string, ValueTuple<int, int>>();//¿Ø¥÷ ¿Ã∏ß, µ∑/¿Œµ¶Ω∫
-    private Dictionary<string, int> enemyCostDictionary = new Dictionary<string, int>();//¿Ø¥÷ ¿Ã∏ß, µ∑
+    private Dictionary<string, int> enemyCostDictionary = new Dictionary<string, int>();//¿˚ ¿Ã∏ß, µ∑
     private List<TextMeshProUGUI> unitCostText = new List<TextMeshProUGUI>();
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        money = startMoney;
+        CostSet();
     }
 
-    private void Start()
+    private void CostSet()
     {
+        money = startMoney;
+
         //¿Ø¥÷ ƒ⁄Ω∫∆Æ ≈ÿΩ∫∆Æ ∞°¡Æø¿±‚
         for (int i = 0; i < unitCase.childCount; i++)
         {
@@ -40,13 +44,19 @@ public class MoneyManager : MonoBehaviour
         AgentData[] enemys = Resources.LoadAll<AgentData>("EnemySO");
 
         for (int i = 0; i < units.Length; i++)
-        {
-            unitCostDictionary.Add(units[i].name, ( units[i].cost, i));
-            unitCostText[i].text = units[i].cost.ToString();
-        }
+            unitCostDictionary.Add(units[i].name, (units[i].cost, -1));
+
         for (int i = 0; i < enemys.Length; i++)
-        {
             enemyCostDictionary.Add(enemys[i].name, enemys[i].cost);
+
+        for (int i = 0; i < 5; i++)
+        {
+            string name = unitCase.GetChild(i).name.Replace("_Image", "");
+            var dict = unitCostDictionary[name];
+            var newValue = new ValueTuple<int, int>(dict.Item1, i);
+
+            unitCostText[i].text = dict.Item1.ToString();
+            unitCostDictionary[name] = newValue;
         }
     }
 
@@ -57,7 +67,7 @@ public class MoneyManager : MonoBehaviour
         unitCostDictionary[unitName] = newValue;
 
         int index = dict.Item2;
-        unitCostText[index].text = unitCostDictionary[unitName].ToString();
+        unitCostText[index].text = unitCostDictionary[unitName].Item1.ToString();
     }
 
     public void UpdateEnemysCost(float value)
