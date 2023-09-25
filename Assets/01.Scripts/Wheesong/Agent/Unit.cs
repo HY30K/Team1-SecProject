@@ -19,6 +19,11 @@ public abstract class Unit : Agent
             sp.flipX = enemyTrs.position.x - transform.position.x > 0 ? false : true;
     }
 
+    private void OnMouseDown()
+    {
+        Debug.Log($"{gameObject.name} º±≈√");
+    }
+
     protected override void DataSetting()
     {
         AgentData unitData = AgentDictionary.Instance.unitDatas[unitSOName];
