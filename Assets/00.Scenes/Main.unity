@@ -5842,6 +5842,7 @@ MonoBehaviour:
   - {fileID: 3103292954290056990, guid: 61ce79b6e82c57c4da2d70dcd4cf0bef, type: 3}
   - {fileID: 6029262584239301092, guid: 161d0a39eef5c5244b7068a6268bc070, type: 3}
   - {fileID: 7226965235208405967, guid: e558f104559cf114785dd7f9e7d436ad, type: 3}
+  - {fileID: 5203920499128707302, guid: 489696f0c18f4454eb7c78d0b4728f48, type: 3}
 --- !u!4 &1403357505
 Transform:
   m_ObjectHideFlags: 0
@@ -18145,6 +18146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479e93b41a9d2fe46918a667fe25d372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightingEffect: {fileID: 5203920499128707302, guid: 489696f0c18f4454eb7c78d0b4728f48, type: 3}
   unitParent: {fileID: 153974215}
   units:
   - {fileID: 2816505283520809009, guid: ab0c3abc1e7383a49a3fe44a3a9f41cf, type: 3}

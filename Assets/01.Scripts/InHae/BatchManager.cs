@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -8,6 +9,9 @@ using UnityEngine;
 
 public class BatchManager : MonoBehaviour
 {
+    [Header("Effect")]
+    [SerializeField] private GameObject lightingEffect;
+
     [Header("UnitData")]
     [SerializeField] private Transform unitParent;
     [SerializeField] private GameObject[] units;
@@ -63,9 +67,20 @@ public class BatchManager : MonoBehaviour
         if (BatchCheck.batchble && BatchTile.Instance.IsBatchAble(batchPos))
         {
             currentUnitAlpha.transform.Find("BatchArea").gameObject.SetActive(false);
-            PoolingManager.Instance.Pop(unitsDictionary[unitName].name, BatchTile.Instance.Vector2IntPos(batchPos), unitParent);
+
+            Vector2 installPos = BatchTile.Instance.Vector2IntPos(batchPos);
+            PoolingManager.Instance.Pop(unitsDictionary[unitName].name, installPos, unitParent);
+
+            GameObject effect = PoolingManager.Instance.Pop(lightingEffect.name, installPos + new Vector2(0, 1f));
+            StartCoroutine(PushEffect(effect));
         }
         PoolingManager.Instance.Push(currentUnitAlpha);
+    }
+
+    IEnumerator PushEffect(GameObject effect)
+    {
+        yield return new WaitForSeconds(1f);
+        PoolingManager.Instance.Push(effect);
     }
 }
 
