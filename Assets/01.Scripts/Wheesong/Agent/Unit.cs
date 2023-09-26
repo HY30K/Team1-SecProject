@@ -29,7 +29,7 @@ public abstract class Unit : Agent
         if (enemyTrs != null)
             sp.flipX = enemyTrs.position.x - transform.position.x > 0 ? false : true;
     }
-
+    
     protected override void DataSetting()
     {
         AgentData unitData = AgentDictionary.Instance.unitDatas[unitSOName];

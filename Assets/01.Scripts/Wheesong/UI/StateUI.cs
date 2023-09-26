@@ -15,6 +15,7 @@ public class StateUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI unitNameText;
     [SerializeField] private TextMeshProUGUI unitLevelText;
     [SerializeField] private TextMeshProUGUI stateText;
+    [SerializeField] private Animator levelupEffect;
     [SerializeField] private Image unitSpriteImage;
     [SerializeField] private Button unitUpdgradeBtn;
 
@@ -66,6 +67,8 @@ public class StateUI : MonoBehaviour
         unitData.level++;
         unitData.hp *= hpUpgradeGrape;
         unitData.attack *= attackUpgradeGrape;
+
+        levelupEffect.SetTrigger("Effect");
 
         OnState(unitData);
     }
