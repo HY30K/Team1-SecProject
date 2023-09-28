@@ -83,7 +83,6 @@ public class MoneyManager : MonoBehaviour
 
     public int EnemyCost(string enemyName)
     {
-        Debug.Log(enemyName);
         return enemyCostDictionary[enemyName];
     }
 

@@ -43,9 +43,10 @@ public class CameraMove : MonoBehaviour
 
             Transform unit = units.GetChild(unitIndex);
             AgentData unitData = Resources.Load<AgentData>($"UnitSO/{unit.name}");
-            vcam.Follow = unit;
             unitImage.sprite = unitData.Sprite;
             unitText.text = $"LV.{unitData.level}";
+
+            player.transform.position = unit.position;
 
             if (unitIndex >= units.childCount - 1)
             {
@@ -60,7 +61,6 @@ public class CameraMove : MonoBehaviour
             Input.GetAxisRaw("Vertical") != 0)
         {
             unitProfile.SetActive(false);
-            vcam.Follow = player;
         }
     }
 

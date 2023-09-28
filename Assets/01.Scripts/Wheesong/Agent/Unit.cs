@@ -10,11 +10,15 @@ public abstract class Unit : Agent
     [Header("SOName")]
     [SerializeField] private string unitSOName;
 
+    [Header("Other")]
+    [SerializeField] private GameObject beenObj;
+
+    protected Transform enemyTrs;
+    private Camera mainCam;
+    private GameObject beenPos;
+
     public int level;
     protected bool isChosed;
-
-    private Camera mainCam;
-    protected Transform enemyTrs;
 
     protected override void Awake()
     {
@@ -53,9 +57,9 @@ public abstract class Unit : Agent
         }
         else if (isChosed && Input.GetMouseButton(0))
         {
-            Transform mousePos = new GameObject().transform;
-            mousePos.position = mainCam.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10));
-            enemyTrs = mousePos;
+            Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10));
+            beenPos = PoolingManager.Instance.Pop(beenObj.name, mousePos);
+            enemyTrs = beenPos.transform;
 
             isChangeState = true;
             state = State.CHASE;
@@ -77,6 +81,8 @@ public abstract class Unit : Agent
         {
             if (!FindEnemy())
             {
+                if (beenPos != null)
+                    PoolingManager.Instance.Push(beenPos);
                 isChangeState = true;
                 rb.velocity = Vector2.zero;
                 state = State.IDLE;
