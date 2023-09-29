@@ -214,6 +214,7 @@ MonoBehaviour:
   hpBarPrefab: {fileID: 1066664753743900291, guid: 75633f66c9ee9304785fb9626d3236d2, type: 3}
   hpbarPosX: 1
   isDie: 0
+  dropOdds: 90
 --- !u!114 &-1344330958409474230
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,8 +18,8 @@ public class Living : MonoBehaviour
     private Transform sliderValue;
     private Rigidbody2D rb;
 
-    protected float hp;
-    protected float maxHp;
+    public float hp { get; private set; }
+    public float maxHp { get; private set; }
     public bool isDie;
 
     protected virtual void Awake()

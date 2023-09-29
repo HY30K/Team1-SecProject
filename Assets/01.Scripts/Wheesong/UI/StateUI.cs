@@ -28,8 +28,7 @@ public class StateUI : MonoBehaviour
     {
         for (int i = 0; i < unitImages.childCount; i++)
         {
-            AgentData unit = Resources.Load<AgentData>($"UnitSO/" +
-                $"{unitImages.GetChild(i).name.Replace("_Image", "")}");
+            AgentData unit = AgentDictionary.Instance.unitDatas[$"{unitImages.GetChild(i).name.Replace("_Image", "")}"];
             unitBtn[i].transform.GetChild(0).GetComponent<Image>()
                 .sprite = unit.Sprite;
             unitBtn[i].onClick.AddListener(() => OnState(unit));

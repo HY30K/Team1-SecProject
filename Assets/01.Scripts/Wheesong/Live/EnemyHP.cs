@@ -15,7 +15,7 @@ public class EnemyHP : Living
         enemy.state = State.DIE;
         enemy.isChangeState = true;
 
-        //DropItem();
+        DropItem();
 
         StartCoroutine(PushEnemy(1));
     }

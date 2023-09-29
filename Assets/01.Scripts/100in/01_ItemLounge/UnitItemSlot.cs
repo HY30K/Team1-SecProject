@@ -23,9 +23,10 @@ public class UnitItemSlot : MonoBehaviour
     public void AddItem(WeaponStatusSO weaponStatusSO)
     {
         _itemSlot[_currentSlot].sprite = weaponStatusSO.WeaponSprite;
-        unitHp.OnHeel(weaponStatusSO.Hp);
-        unit.speed += weaponStatusSO.Speed;
-        unit.attack += weaponStatusSO.AttackPower;
+        float heeling = unitHp.maxHp * weaponStatusSO.Hp;
+        unitHp.OnHeel(heeling);
+        unit.speed *= weaponStatusSO.Speed;
+        unit.attack *= weaponStatusSO.AttackPower;
         unit.attackDelay *= weaponStatusSO.AttackSpeed;
         _currentSlot++;
     }
