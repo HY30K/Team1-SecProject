@@ -18,4 +18,4 @@ MonoBehaviour:
   _hp: 0
   _speed: 0
   _attackPower: 0
-  _attackSpeed: 1.5
+  _attackSpeed: 0.5

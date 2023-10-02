@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7953826854270258356}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.34, y: -2.55, z: -0.020328373}
+  m_LocalPosition: {x: 6.34, y: -2.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4ea2581ae03f144aeeaf3467cff8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponStatus: {fileID: 11400000, guid: c65fdb2d59a932d4f943908a0e5e6ef7, type: 2}
+  _weaponStatus: {fileID: 11400000, guid: f5051da00260a81478f67bb589010b87, type: 2}
 --- !u!212 &5444609517153419987
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -128,7 +128,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

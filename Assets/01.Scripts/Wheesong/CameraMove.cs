@@ -21,7 +21,9 @@ public class CameraMove : MonoBehaviour
 
     private CinemachineVirtualCamera vcam;
     private Rigidbody2D rb;
+    private Transform unit;
     private int unitIndex;
+    private bool isViewing;
 
     private void Awake()
     {
@@ -39,28 +41,31 @@ public class CameraMove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && units.childCount > 0)
         {
+            if (unitIndex >= units.childCount)
+            {
+                unitIndex = 0;
+            }
+
+            isViewing = true;
             unitProfile.SetActive(true);
 
-            Transform unit = units.GetChild(unitIndex);
+            unit = units.GetChild(unitIndex);
             AgentData unitData = Resources.Load<AgentData>($"UnitSO/{unit.name}");
             unitImage.sprite = unitData.Sprite;
             unitText.text = $"LV.{unitData.level}";
 
+            vcam.Follow = unit;
             player.transform.position = unit.position;
 
-            if (unitIndex >= units.childCount - 1)
-            {
-                unitIndex = 0;
-            }
-            else
-            {
-                unitIndex++;
-            }
+            unitIndex++;
         }
-        else if(Input.GetAxisRaw("Horizontal") != 0 ||
-            Input.GetAxisRaw("Vertical") != 0)
+        else if((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && isViewing)
         {
+            isViewing = false;
             unitProfile.SetActive(false);
+
+            player.transform.position = unit.position;
+            vcam.Follow = player;
         }
     }
 

@@ -25,9 +25,9 @@ public class UnitItemSlot : MonoBehaviour
         _itemSlot[_currentSlot].sprite = weaponStatusSO.WeaponSprite;
         float heeling = unitHp.maxHp * weaponStatusSO.Hp;
         unitHp.OnHeel(heeling);
-        unit.speed *= weaponStatusSO.Speed;
-        unit.attack *= weaponStatusSO.AttackPower;
-        unit.attackDelay *= weaponStatusSO.AttackSpeed;
+        unit.speed *= (1 + weaponStatusSO.Speed);
+        unit.attack *= (1 + weaponStatusSO.AttackPower);
+        unit.attackDelay *= (1 + weaponStatusSO.AttackSpeed);
         _currentSlot++;
     }
     public bool Check()
