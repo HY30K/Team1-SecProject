@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8eb1a30da04cc54384969a2a8ba399f, type: 3}
-  m_Name: Bov
+  m_Name: Bow
   m_EditorClassIdentifier: 
-  qwer: 8da5954b-a669-4ac4-b356-5cceae1d9b5a
-  _weaponName: "\uD65C"
-  _weaponSprite: {fileID: 21300000, guid: 2435ed21f1f01ea40b6fbb20aa2f0ebd, type: 3}
-  _keyValue: 1001
+  _weaponName: Bow
+  _weaponSprite: {fileID: 21300000, guid: 275fb3e25ea19344b8d8d4342d7caddc, type: 3}
+  _keyValue: 1002
   _hp: 5
-  _attackPower: 0
-  _attackSpeed: 0
+  _attackPower: 5
+  _attackSpeed: 15

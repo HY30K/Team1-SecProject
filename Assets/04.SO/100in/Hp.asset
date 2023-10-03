@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8eb1a30da04cc54384969a2a8ba399f, type: 3}
-  m_Name: Sword
+  m_Name: Hp
   m_EditorClassIdentifier: 
-  _weaponName: Sword
-  _weaponSprite: {fileID: 21300000, guid: 419656e7b464c404cbf4e0542a09d880, type: 3}
-  _keyValue: 1001
-  _hp: 5
-  _attackPower: 15
-  _attackSpeed: 5
+  _weaponName: Hp
+  _weaponSprite: {fileID: 21300000, guid: 4570fa1ff92449f4cb115c3dcd5b7a3f, type: 3}
+  _keyValue: 1003
+  _hp: 15
+  _attackPower: 0
+  _attackSpeed: 10
