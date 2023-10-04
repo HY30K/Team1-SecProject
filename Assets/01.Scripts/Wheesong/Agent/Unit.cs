@@ -58,7 +58,6 @@ public abstract class Unit : Agent
         }
         else if (isChosed && Input.GetMouseButton(0))
         {
-            //BatchManager.Instance.isUnitChoseing = false;
             Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10));
             beenPos = PoolingManager.Instance.Pop(beenObj.name, mousePos);
             enemyTrs = beenPos.transform;
@@ -118,8 +117,7 @@ public abstract class Unit : Agent
 
     private void OnMouseUp()
     {
-        if (WaveSystem.Instance.isWaving || BatchManager.Instance.isUnitChoseing) return;
-        //BatchManager.Instance.isUnitChoseing = true;
+        if (WaveSystem.Instance.isWaving || isChosed) return;
         ChoseStand(true);
     }
 
