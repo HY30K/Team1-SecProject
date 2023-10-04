@@ -118,7 +118,7 @@ public class WaveSystem : MonoSingleton<WaveSystem>
     }
 
     private void PlayerLose()
-    {
+    {    
         turnningText.text = "Wave Lose!";
 
         //남아있는 적들 pop해주기

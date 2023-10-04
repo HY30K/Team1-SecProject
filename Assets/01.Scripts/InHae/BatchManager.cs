@@ -22,6 +22,8 @@ public class BatchManager : MonoBehaviour
     private Dictionary<string, GameObject> unitAlphasDictionary = new Dictionary<string, GameObject>();
     private GameObject currentUnitAlpha;
 
+    public bool isUnitChoseing;
+
     static public BatchManager Instance;
 
     private void Awake()

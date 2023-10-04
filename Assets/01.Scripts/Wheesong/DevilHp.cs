@@ -17,6 +17,14 @@ public class DevilHp : MonoBehaviour
         devilHp = devilMaxhp;
     }
 
+    public void CostHp(int burntDmg)
+    {
+        if (devilHp - burntDmg <= 0) return;
+
+        OnHit(burntDmg);
+        MoneyManager.Instance.UpdateMoney(burntDmg * 10);
+    }
+
     public void OnHit(float dmg)
     {
         float nDmg = devilHp - dmg;
