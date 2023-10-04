@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,15 +14,15 @@ public class Living : MonoBehaviour
     [SerializeField] private Transform hpBarPrefab;
     [SerializeField] float hpbarPosX = 1f;
 
-    private GameObject hpBar;
+    protected GameObject hpBar;
     private Transform sliderValue;
     private Rigidbody2D rb;
 
-    protected float hp;
-    protected float maxHp;
+    public float hp { get; private set; }
+    public float maxHp { get; private set; }
     public bool isDie;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -53,6 +54,17 @@ public class Living : MonoBehaviour
             isDie = true;
             DieAction?.Invoke();
         }
+    }
+
+    public virtual void OnHeel(float heel)
+    {
+        if (hp + heel > maxHp)
+        {
+            maxHp = hp + heel;
+            hp = maxHp;
+        }
+        else
+            hp += heel;
     }
 
     public virtual void Die()

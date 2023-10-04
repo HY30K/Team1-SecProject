@@ -20,7 +20,7 @@ public abstract class Enemy : Agent
 
     protected override void DataSetting()
     {
-        AgentData enemyData = WaveSystem.Instance.enemyDatas[enemySOName];
+        AgentData enemyData = AgentDictionary.Instance.enemyDatas[enemySOName];
         livingHp.HpSetting(enemyData.hp);
         speed = enemyData.Speed;
         attack = enemyData.attack;

@@ -16,6 +16,11 @@ public class Item : MonoBehaviour
         _waitLounge = GameObject.Find("ItemManager").GetComponent<ItemWaitLounge>();
     }
 
+    private void Update()
+    {
+        _spriteRenderer.material.SetTexture("Sprite", _spriteRenderer.sprite.texture);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")&&_waitLounge.TakeItemChake())
@@ -26,6 +31,15 @@ public class Item : MonoBehaviour
         else if (collision.CompareTag("Player"))
         {
             Debug.Log("æ∆¿Ã≈€√¢ ≤À√°¿Ω");
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        if (_waitLounge.TakeItemChake())
+        {
+            _waitLounge.TakeItem(_weaponStatus);
+            PoolingManager.Instance.Push(gameObject);
         }
     }
 }

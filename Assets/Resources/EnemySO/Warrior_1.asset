@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9faff768f5abed46b33ae5bec6009e0, type: 3}
   m_Name: Warrior_1
   m_EditorClassIdentifier: 
+  sprite: {fileID: 4457663794195168306, guid: c9d48a21f2d1f9a4ca9615965b1689eb, type: 3}
   cost: 15
   hp: 9
   attack: 0.6

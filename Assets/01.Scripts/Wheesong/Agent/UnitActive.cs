@@ -61,7 +61,7 @@ public class UnitActive : Unit
     {
         enemyTrs.GetComponent<EnemyActive>().OnHit();
         yield return new WaitForSeconds(attackDelay);
-        if(enemyTrs != null)
+        if(enemyTrs != null && DetectionLength(attackRange))
             enemyTrs.GetComponent<EnemyHP>().OnHit(attack);
 
         canAttack = true;

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
+    [SerializeField] private Image[] uguis;
     private string currentUnitName;
     private Camera mainCam;
     private RaycastHit2D hit;
@@ -30,14 +31,25 @@ public class BatchUI : MonoBehaviour, IEndDragHandler, IDragHandler, IPointerDow
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("log");
-        currentUnitName = eventData.pointerCurrentRaycast.gameObject.name;
+        foreach (Image ui in uguis)
+        {
+            Color newColor = ui.color;
+            newColor.a = 0.4f;
+            ui.color = newColor;
+        }
+        currentUnitName = eventData.pointerCurrentRaycast.gameObject.name.Replace("_Image", "");
         Vector2 mousePos = mainCam.ScreenToWorldPoint(eventData.position);
         BatchManager.Instance.UnitCreate(mousePos, currentUnitName+"Alpha");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        foreach (Image ui in uguis)
+        {
+            Color newColor = ui.color;
+            newColor.a = 1;
+            ui.color = newColor;
+        }
         BatchManager.Instance.UnitDestroy();
     }
 }
