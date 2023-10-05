@@ -278,7 +278,7 @@ MonoBehaviour:
   - {fileID: 819842668}
   - {fileID: 628781300}
   _toych: {fileID: 1873272296}
-  NextScene: 100in
+  NextScene: Main
 --- !u!95 &21598713
 Animator:
   serializedVersion: 5
