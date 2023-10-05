@@ -190,14 +190,14 @@ MonoBehaviour:
       - m_Target: {fileID: 1817618847103580800}
         m_TargetAssemblyTypeName: EnemyHP, Assembly-CSharp
         m_MethodName: Die
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: -1344330958409474230}
         m_TargetAssemblyTypeName: EnemyCost, Assembly-CSharp

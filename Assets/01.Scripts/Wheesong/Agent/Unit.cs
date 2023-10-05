@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -116,8 +117,8 @@ public abstract class Unit : Agent
 
     private void OnMouseUp()
     {
-        if (WaveSystem.Instance.isWaving) return;
-        ChoseStand(!isChosed);
+        if (WaveSystem.Instance.isWaving || isChosed) return;
+        ChoseStand(true);
     }
 
     private void ChoseStand(bool value)

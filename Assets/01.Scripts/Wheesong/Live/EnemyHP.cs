@@ -15,9 +15,13 @@ public class EnemyHP : Living
         enemy.state = State.DIE;
         enemy.isChangeState = true;
 
-        DropItem();
-
         StartCoroutine(PushEnemy(1));
+    }
+
+    public void Die(bool isDrawItem)
+    {
+        Die();
+        if(isDrawItem) DropItem();
     }
 
     private void DropItem()
