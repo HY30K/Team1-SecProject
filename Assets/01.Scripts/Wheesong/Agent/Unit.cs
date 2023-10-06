@@ -51,7 +51,7 @@ public abstract class Unit : Agent
     {
         Idle();
 
-        if (FindEnemy())
+        if (DetectionRange(range))
         {
             isChangeState = true;
             state = State.CHASE;
@@ -80,7 +80,7 @@ public abstract class Unit : Agent
         }
         else
         {
-            if (!FindEnemy())
+            if (!DetectionRange(range))
             {
                 if (beenPos != null)
                     PoolingManager.Instance.Push(beenPos);
@@ -129,40 +129,18 @@ public abstract class Unit : Agent
         sp.material.SetFloat("Outline", outline);
     }
 
-    private bool FindEnemy() //idle <=> chase
-    {
-        Enemy[] enemys = FindObjectsOfType<Enemy>();
-        if (enemys.Length > 0)
-        {
-            float length = 99;
-            foreach (Enemy enemy in enemys)
-            {
-                if (Vector2.Distance(enemy.transform.position, transform.position) < length && enemy.state != State.DIE)
-                {
-                    length = Vector2.Distance(enemy.transform.position, transform.position);
-                    enemyTrs = enemy.transform;
-                }
-            }
-            if (length == 99)
-                return false;
-            return true;
-        }
-        enemyTrs = null;
-        return false;
-    }
-
-    //protected bool DetectionRange(float range) //idle <=> chase
+    //private bool FindEnemy() //idle <=> chase
     //{
-    //    Collider2D[] getRange = Physics2D.OverlapCircleAll(transform.position, range, LayerMask.GetMask("Enemy"));
-    //    if (getRange.Length > 0)
+    //    Enemy[] enemys = FindObjectsOfType<Enemy>();
+    //    if (enemys.Length > 0)
     //    {
     //        float length = 99;
-    //        foreach (Collider2D enemys in getRange)
+    //        foreach (Enemy enemy in enemys)
     //        {
-    //            if (Vector2.Distance(enemys.transform.position, transform.position) < length && enemys.enabled)
+    //            if (Vector2.Distance(enemy.transform.position, transform.position) < length && enemy.state != State.DIE)
     //            {
-    //                length = Vector2.Distance(enemys.transform.position, transform.position);
-    //                enemyTrs = enemys.transform;
+    //                length = Vector2.Distance(enemy.transform.position, transform.position);
+    //                enemyTrs = enemy.transform;
     //            }
     //        }
     //        if (length == 99)
@@ -172,6 +150,28 @@ public abstract class Unit : Agent
     //    enemyTrs = null;
     //    return false;
     //}
+
+    protected bool DetectionRange(float range) //idle <=> chase
+    {
+        Collider2D[] getRange = Physics2D.OverlapCircleAll(transform.position, range, LayerMask.GetMask("Enemy"));
+        if (getRange.Length > 0)
+        {
+            float length = 99;
+            foreach (Collider2D enemys in getRange)
+            {
+                if (Vector2.Distance(enemys.transform.position, transform.position) < length && enemys.enabled)
+                {
+                    length = Vector2.Distance(enemys.transform.position, transform.position);
+                    enemyTrs = enemys.transform;
+                }
+            }
+            if (length == 99)
+                return false;
+            return true;
+        }
+        enemyTrs = null;
+        return false;
+    }
 
     protected bool DetectionLength(float range) //chase <=> attack
     {

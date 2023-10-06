@@ -50,7 +50,7 @@ public class StateUI : MonoBehaviour
             $"ATK : {agentData.attack} \n" +
             $"ATK_SP : {Mathf.Floor((atkSp_value / agentData.AttackDelay) * 1f)}";
 
-        upgradeCost = Mathf.RoundToInt(MoneyManager.Instance.UnitCost(agentData.name) * 2.5f);
+        upgradeCost = Mathf.RoundToInt(MoneyManager.Instance.UnitCost(agentData.name) * 2f);
         unitUpdgradeBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().
             text = upgradeCost.ToString();
     }

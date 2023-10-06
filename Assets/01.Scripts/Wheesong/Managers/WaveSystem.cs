@@ -54,8 +54,8 @@ public class WaveSystem : MonoSingleton<WaveSystem>
     {
         if (isWaving || unitParent.childCount <= 0) return;
 
-        isWaving = isSpawning = true;
         waveUnitCnt = unitParent.childCount;
+        isWaving = isSpawning = true;
         turnningText.text = $"WAVE {nowWave}";
 
         turnningText.transform.DOMoveX(960, 0.5f).SetEase(Ease.OutCubic).OnComplete(() => {
@@ -176,7 +176,7 @@ public class WaveSystem : MonoSingleton<WaveSystem>
 
             int randomIndex = UnityEngine.Random.Range(0, randomEnemy.Count);
             string popName = spawnDatas[wave].enemyTuples[randomIndex].obj.name;
-            Vector2 spawnPos = spawnTrs[UnityEngine.Random.Range(0, spawnDatas.Count)].position;
+            Vector2 spawnPos = spawnTrs[UnityEngine.Random.Range(0, spawnTrs.Length)].position;
             PoolingManager.Instance.Pop(popName, spawnPos);
 
             spawnDatas[wave].enemyTuples[randomIndex].cnt--;
