@@ -31,6 +31,10 @@ public class WaveSystem : MonoSingleton<WaveSystem>
     [SerializeField] private Button nextBtn;
     [SerializeField] private TextMeshProUGUI turnningText;
 
+    [Header("GameoverPanel")]
+    [SerializeField] private Image niggerPanel;
+    [SerializeField] private GameObject btns;
+
     [Header("Obj")]
     [SerializeField] private Transform unitParent;
 
@@ -100,7 +104,7 @@ public class WaveSystem : MonoSingleton<WaveSystem>
         }
     }
 
-    private void WaveEnd()//공통적으로 웨이브 끝나고 할 거
+    public void WaveEnd()//공통적으로 웨이브 끝나고 할 거
     {
         nowWave++;
 
@@ -129,6 +133,16 @@ public class WaveSystem : MonoSingleton<WaveSystem>
         }
         //마왕체력 깎기
         devilHp.OnHit(20);
+    }
+
+    public void GameOverSystem()
+    {
+        turnningText.text = "Game Over";
+
+        turnningText.transform.DOMoveX(960, 0.5f).SetEase(Ease.OutCubic).OnComplete(() => {
+            niggerPanel.gameObject.SetActive(true);
+            niggerPanel.DOFade(1, 0.5f).OnComplete(() => { btns.SetActive(true); });
+        });
     }
 
     private IEnumerator SequentiallySpawnEnemy() //위에있는 순부터 차례대로 생성

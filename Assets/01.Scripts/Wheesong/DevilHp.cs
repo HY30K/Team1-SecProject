@@ -39,6 +39,8 @@ public class DevilHp : MonoBehaviour
             .OnComplete(() =>
             {
                 nowHp = devilHp;
+                if(devilHp <= 0)
+                    GameOver();
             });
         DOTween.To(() => devilSlsider.value, x => devilSlsider.value = x, nDmg, 1f).SetEase(Ease.OutCubic);
     }
@@ -46,5 +48,10 @@ public class DevilHp : MonoBehaviour
     public void OnHeel(float heel)
     {
 
+    }
+
+    public void GameOver()
+    {
+        WaveSystem.Instance.GameOverSystem();
     }
 }
