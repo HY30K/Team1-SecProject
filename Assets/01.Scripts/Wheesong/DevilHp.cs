@@ -26,7 +26,7 @@ public class DevilHp : MonoBehaviour
 
     public void CostHp(int burntDmg)
     {
-        if (devilHp - burntDmg <= 0) return;
+        if (devilHp < burntDmg) return;
 
         OnHit(burntDmg);
         MoneyManager.Instance.UpdateMoney(burntDmg * 10);
