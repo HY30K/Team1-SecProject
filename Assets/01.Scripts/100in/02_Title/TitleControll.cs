@@ -23,10 +23,9 @@ public class TitleControll : MonoBehaviour
         {
             _toychCount++;
         }
-        for (int i = 0; i < _text.Count; i++)
-        {
-            _text[i].fontMaterial.DOFloat(0, ShaderUtilities.ID_FaceDilate, 3);
-        }
+
+        _text[0].fontMaterial.DOFloat(0, ShaderUtilities.ID_FaceDilate, 3);
+        _text[1].fontMaterial.DOFloat(0, ShaderUtilities.ID_FaceDilate, 5);
         Invoke("OnFadeText", 3);
     }
 
@@ -40,11 +39,11 @@ public class TitleControll : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if(_toychCount == 0)
+            if (_toychCount == 0)
             {
                 _ani.speed = 200;
             }
-            else if(_toychCount==1)
+            else if (_toychCount == 1)
             {
                 ScenesLoadManager.Instance.FadeOut(() => SceneManager.LoadScene(NextScene));
             }
