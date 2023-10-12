@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 
 public class UnitActive : Unit
 {
@@ -28,7 +29,7 @@ public class UnitActive : Unit
     protected override void Attack()//АјАн
     {
         if (!canAttack) return;
-        
+
         canAttack = false;
         StartCoroutine(AttackDelay());
     }

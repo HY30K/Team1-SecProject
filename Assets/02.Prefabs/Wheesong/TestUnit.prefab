@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 5662888050205365683}
   - component: {fileID: 8227515139885820367}
   - component: {fileID: 7628189798254074198}
+  - component: {fileID: 7949184526578709377}
   m_Layer: 7
   m_Name: TestUnit
   m_TagString: Untagged
@@ -406,6 +407,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be7b79c98fa53a4ab8d676b6c196b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7949184526578709377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706738387598235632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 000000001950db0047d313af
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -44722
+  m_LocalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0}
 --- !u!1 &3216760521087559385
 GameObject:
   m_ObjectHideFlags: 0

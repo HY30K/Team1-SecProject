@@ -19,5 +19,5 @@ MonoBehaviour:
   attack: 1.1
   speed: 2.5
   attackDelay: 0.7
-  range: 8
+  range: 12
   attackRange: 0.9
