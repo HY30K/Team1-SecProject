@@ -9,15 +9,17 @@ public class TitleControll : MonoBehaviour
     [SerializeField] private List<TextMeshPro> _text = new List<TextMeshPro>();
     [SerializeField] private TextMeshProUGUI _toych;
     [SerializeField] private string NextScene;
+    [SerializeField] GameObject StartBtn;
     private Animator _ani;
     private Color _cr;
     private int _toychCount = 0;
-
+    private bool _isToych = false;
+    private float _currentTime = 0;
     private void Awake()
     {
         _ani = GetComponent<Animator>();
     }
-    private void OnText()
+    public void OnText()
     {
         if (_toychCount == 0)
         {
@@ -37,17 +39,24 @@ public class TitleControll : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        _currentTime += Time.deltaTime;
+    }
+
+    public void ToychEvent()
+    {
+
+        if (_toychCount == 0&& _currentTime>1)
         {
-            if (_toychCount == 0)
-            {
-                _ani.speed = 200;
-            }
-            else if (_toychCount == 1)
-            {
-                ScenesLoadManager.Instance.FadeOut(() => SceneManager.LoadScene(NextScene));
-            }
+            _ani.speed = 500;
         }
+        else if (_toychCount == 1 && !_isToych&& _currentTime>1)
+        {
+            _isToych = true;
+            Debug.Log("ÀÌ°Ô ¿ÖµÇ³ó");
+            Debug.Log(_isToych);
+            ScenesLoadManager.Instance.FadeOut(() => SceneManager.LoadScene(NextScene));
+        }
+
     }
 
     private IEnumerator TextFadeOut()

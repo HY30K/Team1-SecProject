@@ -35,6 +35,7 @@ public class ScenesLoadManager : MonoSingleton<ScenesLoadManager>
     public void FadeOut(Action action)
     {
         StartCoroutine(fadeOut(action));
+      
     }
     private IEnumerator fadeOut(Action action)
     {
@@ -45,6 +46,8 @@ public class ScenesLoadManager : MonoSingleton<ScenesLoadManager>
             _image.color = _cr;
             yield return null;
         }
+        Debug.Log("페이드아웃데스");
+        Debug.Log(_image.color);
         action?.Invoke();
     }
     private void OnEnable()
@@ -54,7 +57,7 @@ public class ScenesLoadManager : MonoSingleton<ScenesLoadManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        FadeIn(null);
+        FadeIn(() => { });
     }
     private void OnDisable()
     {
